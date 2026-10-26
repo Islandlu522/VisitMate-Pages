@@ -55,4 +55,17 @@
 #visitmate-no-location .vi-globe-sites small{color:#c0d7d0;margin-top:2px}
 #visitmate-no-location .vi-globe-panel .vi-intel-note{color:#c0d7d0}
 #visitmate-no-location .vi-globe-coordinates>div{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-#visitmate-no-location .vi-globe-coordinates small{display:block;color:var(--vm-soft);font-size:10px;margin-top:4px}`r`n#visitmate-no-location .vi-globe-regions{margin-top:7px;color:#c7dfd9;font-size:10px;line-height:1.5}`r`n
+#visitmate-no-location .vi-globe-coordinates small{display:block;color:var(--vm-soft);font-size:10px;margin-top:4px}
+#visitmate-no-location .vi-globe-regions{margin-top:7px;color:#c7dfd9;font-size:10px;line-height:1.5}
+
+#visitmate-no-location .vi-dialog{margin:auto;background:#fff!important;color:#172b3f!important;border:1px solid #dce4ec;opacity:1;max-height:86dvh;overscroll-behavior:contain;box-shadow:0 24px 80px rgba(8,21,35,.28)}
+#visitmate-no-location .vi-dialog::backdrop{background:rgba(8,21,35,.58);backdrop-filter:none}
+#visitmate-no-location .vi-dialog h2{color:#172b3f;font-size:19px;margin-bottom:16px}
+#visitmate-no-location .vi-dialog label{color:#40566d;font-size:13px;font-weight:500}
+#visitmate-no-location .vi-dialog input,#visitmate-no-location .vi-dialog select,#visitmate-no-location .vi-dialog textarea{background:#fff!important;color:#172b3f!important;border:1px solid #c7d2de;font-size:16px;line-height:1.45;min-height:44px}
+#visitmate-no-location .vi-dialog textarea{min-height:96px}
+#visitmate-no-location .vi-dialog input::placeholder,#visitmate-no-location .vi-dialog textarea::placeholder{color:#6c7f91;opacity:1}
+#visitmate-no-location .vi-dialog .vi-dialog-actions button{background:#fff;color:#40566d;min-height:46px;font-size:15px}
+#visitmate-no-location .vi-dialog .vi-dialog-actions button[type=submit]{background:#087f79;color:#fff;border-color:#087f79}
+#visitmate-no-location .vi-dialog .vi-globe-coordinates small{color:#52677b}
+#visitmate-no-location .vi-dialog .vi-dialog-actions{position:sticky;bottom:0;padding:10px 0 0;background:#fff;z-index:2}
