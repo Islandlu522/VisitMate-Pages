@@ -158,7 +158,7 @@
     #visitmate-no-location .vm-task p{font-size:13px}
     @media(max-width:370px){#visitmate-no-location .vc-list{padding:0 15px 16px}}
   </style>
-  <link rel="stylesheet" href="assets/customer-intelligence.css?v=20261026-mapmodal">
+  <link rel="stylesheet" href="assets/customer-intelligence.css?v=20261026-custom-business">
   <style>
     #visitmate-no-location .vi-context{border-radius:12px;background:var(--vm-tint);color:var(--vm-accent);padding:12px 13px;margin:0 0 10px;font-size:12px}
     #visitmate-no-location .vi-context strong{font-weight:500;display:block;margin-bottom:3px}
@@ -347,8 +347,17 @@
         <div class="vm-opportunities">
           <button type="button" class="vm-opportunity cursor-interaction" data-op="cell" aria-pressed="true"><div class="vm-op-meta"><i data-lucide="layers" aria-hidden="true"></i><span>进展待补充</span></div><strong>灌封胶 Cell</strong><small>电芯灌封应用</small></button>
           <button type="button" class="vm-opportunity cursor-interaction" data-op="cover" aria-pressed="false"><div class="vm-op-meta"><i data-lucide="battery" aria-hidden="true"></i><span>进展待补充</span></div><strong>Battery Cover</strong><small>电池上盖</small></button>
+          <div id="vm-custom-opportunities" class="vm-custom-opportunities"></div>
+          <button type="button" class="vm-opportunity vm-opportunity-add cursor-interaction" data-add-business><span class="vm-add-mark">＋</span><strong>添加业务方向</strong><small>自定义新增业务模块</small></button>
         </div>
         <div id="vi-opportunity-manager" class="vi-manager"></div>
+        <dialog class="vi-dialog" id="vm-module-editor"><h2>新增业务方向</h2><form id="vm-module-form" class="vi-form">
+          <div class="vi-wide"><label for="vm-module-name">业务名称 *</label><input id="vm-module-name" name="name" maxlength="40" required placeholder="例如：导热材料、结构胶"></div>
+          <div class="vi-wide"><label for="vm-module-description">业务说明</label><input id="vm-module-description" name="description" maxlength="80" placeholder="例如：电池包热管理应用，可留空"></div>
+          <p class="vi-wide vi-intel-note">保存后会显示在所有客户的“合作机会方向”中，并可分别记录联系人、合作机会和拜访 Report。</p>
+          <div class="vi-wide vi-dialog-actions"><button type="button" data-module-cancel>取消</button><button type="submit">保存业务方向</button></div>
+          <div class="vi-wide" id="vm-module-error" role="status" aria-live="polite"></div>
+        </form></dialog>
         <div class="vm-section-heading"><h2>联系人</h2><span class="vm-caption">按客户与业务方向记录</span></div>
         <div class="vm-contact-form"><input id="contact-name" type="text" maxlength="80" placeholder="联系人姓名" aria-label="联系人姓名"><input id="contact-role" type="text" maxlength="150" placeholder="部门 / 职务" aria-label="部门或职务"><button type="button" class="vm-copy cursor-interaction" id="contact-add">添加联系人</button></div>
         <label class="vm-copy cursor-interaction vm-upload" for="contact-image"><i data-lucide="scan-text" aria-hidden="true"></i>拍照 / 选择名片，识别联系人</label><input id="contact-image" type="file" accept="image/jpeg,image/png,image/webp,image/bmp" hidden>
@@ -398,8 +407,8 @@
     <footer class="vm-bottom"><span><i data-lucide="calendar-days" aria-hidden="true"></i>拜访</span><span class="vm-current"><i data-lucide="building-2" aria-hidden="true"></i>客户</span><span><i data-lucide="circle-user-round" aria-hidden="true"></i>我的</span></footer>
     </div>
   </div>
-  <script src="assets/customer-intelligence.js?v=20261026-mapmodal"></script>
-  <script src="assets/capacity-globe.js?v=20261026-mapmodal"></script>
+  <script src="assets/customer-intelligence.js?v=20261026-custom-business"></script>
+  <script src="assets/capacity-globe.js?v=20261026-custom-business"></script>
   <script>
     (()=>{
       const root=document.getElementById('visitmate-no-location');
@@ -407,18 +416,20 @@
       const status=root.querySelector('#vm-status');
       const clients={catl:'宁德时代',byd:'比亚迪',nio:'蔚来汽车',sunwoda:'欣旺达',eve:'亿纬锂能',gotion:'国轩高科',calb:'中创新航',xpeng:'小鹏',li:'理想',xiaomi:'小米'};
       const opportunities={cell:'灌封胶 Cell',cover:'Battery Cover · 电池上盖'};
+      const customModules=(()=>{try{const data=JSON.parse(localStorage.getItem('visitmate.custom-business-modules.v1')||'[]');return Array.isArray(data)?data.filter(m=>m&&/^biz-[a-z0-9-]{3,50}$/.test(m.id)&&typeof m.name==='string'&&m.name.trim()).slice(0,24).map(m=>({id:m.id,name:m.name.trim(),description:typeof m.description==='string'?m.description.slice(0,80):''})):[]}catch{return[]}})();
+      customModules.forEach(m=>opportunities[m.id]=m.name);
       const profiles={"catl":{"type":"动力电池与电池系统企业","fact":"官网公开介绍 CTP 高集成成组与麒麟电池，体现电芯、热管理与电池包结构协同的技术路线。","source":"https://www.catl.com/research/technology/","sourceLabel":"宁德时代官网 · 前沿技术","list":"CTP 高集成 · 先核实 Cell 介入位置"},"byd":{"type":"整车与电池业务企业","fact":"比亚迪官方海豹资料介绍刀片电池及 CTB（电池车身一体化）技术，将电池与车身结构结合。该线索不能代表所有车型。","source":"https://media.byd.com/byd-seal-arrives-in-europe-setting-the-standard-in-breakthrough-technology-and-stunning-design/?lang=eng","sourceLabel":"比亚迪官方 · 海豹 CTB 技术介绍（2023）","list":"刀片 / CTB · 上盖需系统评审"},"nio":{"type":"智能电动汽车与补能体系企业","fact":"NIO Power 官方资料展示充电与换电体系。换电是本次判断电池包维护和耐久设计边界的重要公开线索。","source":"https://www.nio.com/nio-power","sourceLabel":"蔚来官方 · NIO Power","list":"换电体系 · 上盖耐久与可维护性"},"sunwoda":{"type":"消费、动力及储能电池业务企业","fact":"欣旺达官网动力电池栏目介绍闪充电池技术，并列出动力业务相关主体。本次机会限定为动力电池方向。","source":"https://www.sunwoda.com/power_technology","sourceLabel":"欣旺达官方 · 动力电池技术","list":"动力闪充 · 包封工艺与包型核实"},"eve":{"type":"电池与电池系统企业","fact":"亿纬锂能官网列有大圆柱动力电池产品，并同时提供模组与电池系统相关产品线。","source":"https://www.evebattery.com/ev-cylindrical-cell","sourceLabel":"亿纬锂能官方 · 大圆柱电池","list":"大圆柱 · 建议先验证 Cell 包封"},"gotion":{"type":"动力电池与储能业务企业","fact":"国轩高科在 2024 年官方发布中介绍了 4695 星晨电池和 G 刻超充电池；这是历史技术线索，当前项目状态需核实。","source":"https://www.gotion.com.cn/newsInfo/144","sourceLabel":"国轩高科官方 · 电池新品发布（2024-05-18）","list":"4695 公开线索 · 核实当前项目窗口"},"calb":{"type":"动力及储能电池企业","fact":"中创新航官网展示多种动力解决方案，并介绍顶流高功率圆柱电池产品。具体目标产品和项目应另行确认。","source":"https://www.calb-tech.com/","sourceLabel":"中创新航官方 · 产品与技术展示","list":"圆柱产品线 · 先确认成组责任方"},"xpeng":{"type":"智能电动汽车企业","fact":"小鹏官方 SEPA2.0 技术资料介绍 CIB（电池车身一体化）设计，该公开平台线索不等于所有当前车型的结构。","source":"https://ir.xiaopeng.com/zh-hans/node/8191/pdf","sourceLabel":"小鹏官方 · SEPA2.0 / CIB 技术资料","list":"CIB 一体化 · 上盖接口联合评审"},"li":{"type":"智能电动汽车企业","fact":"理想官方 2024 年发布资料介绍 MEGA 的 800V 平台及与宁德时代联合开发的麒麟 5C 电池。仅作为该公开平台的线索。","source":"https://ir.lixiang.com/zh-hans/news-releases/news-release-details/li-auto-inc-hosts-2024-spring-launch-event","sourceLabel":"理想官方 · 2024 春季发布","list":"纯电 / 5C 线索 · 先核实材料决定权"},"xiaomi":{"type":"智能电动汽车业务（小米客户下）","fact":"小米官方技术发布介绍 SU7 的 CTB 一体化电池技术。此次分析限定汽车业务，具体车型、年款及采购主体待确认。","source":"https://new-ams.c.mi.com/global/post/677336","sourceLabel":"小米官方社区 · 汽车技术发布（2023）","list":"汽车 / CTB · 锁定车型和合作主体"}};
       const saved=window.openai?.widgetState||{};
       const restored=saved.privateContent?.schema===4?saved.privateContent:{};
       let client=Object.hasOwn(clients,restored.client)?restored.client:'catl';
-      let current=restored.current==='cover'?'cover':'cell';
+      let current=Object.hasOwn(opportunities,restored.current)?restored.current:'cell';
       let page=restored.page==='op'?'op':'info';
       let screen=['clients','home','detail','solutions','present','summary','finish'].includes(restored.screen)?restored.screen:'home';
       let returnScreen=restored.returnScreen==='home'?'home':'clients';
       const records={};
       let activeRecord=0;
       const drafts={};
-      const contacts=(()=>{try{const data=JSON.parse(localStorage.getItem('visitmate.contacts.v1')||'{}');return Object.fromEntries(Object.entries(data||{}).filter(([scope,entries])=>/^(catl|byd|nio|sunwoda|eve|gotion|calb|xpeng|li|xiaomi):(cell|cover)$/.test(scope)&&Array.isArray(entries)).map(([scope,entries])=>[scope,entries.filter(c=>c&&typeof c.name==='string').map(c=>Object.fromEntries(['name','role','phone','email','company','address','createdAt'].map(f=>[f,typeof c[f]==='string'?c[f]:''])))]));}catch{return {};}})();
+      const contacts=(()=>{try{const data=JSON.parse(localStorage.getItem('visitmate.contacts.v1')||'{}');return Object.fromEntries(Object.entries(data||{}).filter(([scope,entries])=>{const split=scope.indexOf(':');return split>0&&Object.hasOwn(clients,scope.slice(0,split))&&Object.hasOwn(opportunities,scope.slice(split+1))&&Array.isArray(entries)}).map(([scope,entries])=>[scope,entries.filter(c=>c&&typeof c.name==='string').map(c=>Object.fromEntries(['name','role','phone','email','company','address','createdAt'].map(f=>[f,typeof c[f]==='string'?c[f]:''])))]));}catch{return {};}})();
       let selectedImage=null;
       let speechRecognition=null;
       const key=()=>client+':'+current;
@@ -438,7 +449,13 @@
       }
       function captureDraft(){stopSpeechImmediately();cancelOcr('切换页面，识别已停止');saveImportDraft();drafts[key()]=[q('#vm-minutes').value,q('#vc-action').value,q('#vc-follow').value,q('#voice-transcript').value,q('#voice-language').value,q('#voice-target').value];}
       function restoreDraft(){const draft=drafts[key()]||['','','','','zh-CN','vm-minutes'];q('#vm-minutes').value=draft[0];q('#vc-action').value=draft[1];q('#vc-follow').value=draft[2];q('#voice-transcript').value=draft[3]||'';q('#voice-language').value=draft[4]||'zh-CN';q('#voice-target').value=draft[5]||'vm-minutes';q('#vm-draft').hidden=true;q('#voice-status').textContent='点击语音录入开始，停止后可核对文字';restoreImportDraft();}
+      function renderBusinessModules(){window.VisitMateBusinessDirections={...opportunities};
+        const host=root.querySelector('#vm-custom-opportunities');if(!host)return;host.replaceChildren();
+        customModules.forEach(module=>{const button=document.createElement('button');button.type='button';button.className='vm-opportunity vm-custom-opportunity cursor-interaction';button.dataset.op=module.id;button.setAttribute('aria-pressed',String(module.id===current));const meta=document.createElement('div');meta.className='vm-op-meta';const mark=document.createElement('span');mark.textContent='自定义业务';meta.append(mark);const title=document.createElement('strong');title.textContent=module.name;const note=document.createElement('small');note.textContent=module.description||'自定义合作机会';button.append(meta,title,note);host.appendChild(button);});
+        const count=root.querySelector('#vm-op-tab .vm-count');if(count)count.textContent=String(2+customModules.length);
+      }
       function render(){
+        renderBusinessModules();
         ['solutions','present','summary','finish'].forEach(name=>root.querySelector('#vr-'+name).hidden=screen!==name);
         root.querySelector('#vm-clients').hidden=screen!=='clients';
         root.querySelector('#vm-home').hidden=screen!=='home';root.querySelector('#vm-detail').hidden=screen!=='detail';
@@ -495,7 +512,8 @@
         root.querySelector('#vh-panel-text').textContent=action==='solutions'?'灌封胶 Cell 与电池上盖的产品方案资料待上传。':visits.length?'已记录 '+visits.length+' 条本次预览纪要；AI 整理功能待接入。':'该客户暂无拜访纪要，请先进入合作机会记录本次沟通内容。';
       }));
       root.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>{captureDraft();page=b.dataset.page;status.textContent='';render();persist();}));
-      root.querySelectorAll('[data-op]').forEach(b=>b.addEventListener('click',()=>{captureDraft();current=b.dataset.op;activeRecord=0;restoreDraft();status.textContent='';root.querySelector('#vm-draft').hidden=true;render();persist();}));
+      root.querySelector('.vm-opportunities').addEventListener('click',event=>{const add=event.target.closest('[data-add-business]');if(add){root.querySelector('#vm-module-error').textContent='';root.querySelector('#vm-module-form').reset();root.querySelector('#vm-module-editor').showModal();return;}const b=event.target.closest('[data-op]');if(b){captureDraft();current=b.dataset.op;activeRecord=0;restoreDraft();status.textContent='';root.querySelector('#vm-draft').hidden=true;render();persist();}});
+      const moduleDialog=root.querySelector('#vm-module-editor'),moduleForm=root.querySelector('#vm-module-form');moduleDialog.querySelector('[data-module-cancel]').addEventListener('click',()=>moduleDialog.close());moduleForm.addEventListener('submit',event=>{event.preventDefault();const name=moduleForm.elements.name.value.trim(),description=moduleForm.elements.description.value.trim(),error=root.querySelector('#vm-module-error');if(!name){error.textContent='请填写业务名称';return;}if(Object.values(opportunities).some(value=>value.trim().toLowerCase()===name.toLowerCase())){error.textContent='这个业务方向已经添加过了，请换一个名称。';return;}if(customModules.length>=24){error.textContent='最多可添加 24 个自定义业务方向。';return;}const module={id:'biz-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7),name,description};customModules.push(module);opportunities[module.id]=name;try{localStorage.setItem('visitmate.custom-business-modules.v1',JSON.stringify(customModules));}catch{customModules.pop();delete opportunities[module.id];error.textContent='当前浏览器无法保存，请检查存储空间。';return;}moduleDialog.close();captureDraft();current=module.id;activeRecord=0;restoreDraft();render();persist();status.textContent='已新增业务方向；该模块的数据按客户分别记录。'});
       const q=selector=>root.querySelector(selector);
       const contactFields=['name','role','phone','email','company','address'];
       let contactImage=null, reportPreviewURL='', contactPreviewURL='', ocrTask=null;
@@ -658,7 +676,7 @@
         const record={minutes,action:root.querySelector('#vc-action').value.trim(),follow:root.querySelector('#vc-follow').value.trim(),date:new Date().toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})};
         if(!records[key()])records[key()]=[];records[key()].unshift(record);activeRecord=0;saveImportDraft();delete drafts[key()];restoreDraft();render();status.textContent='已保存到该客户的本次预览，刷新后不保留';
       });
-      window.addEventListener('openai:set_globals',e=>{const state=e.detail?.globals?.widgetState?.privateContent;if(state?.schema!==4)return;captureDraft();if(Object.hasOwn(clients,state.client))client=state.client;if(['cell','cover'].includes(state.current))current=state.current;if(['info','op'].includes(state.page))page=state.page;if(['home','detail','clients','solutions','present','summary','finish'].includes(state.screen))screen=state.screen;if(['home','clients'].includes(state.returnScreen))returnScreen=state.returnScreen;restoreDraft();render();});
+      window.addEventListener('openai:set_globals',e=>{const state=e.detail?.globals?.widgetState?.privateContent;if(state?.schema!==4)return;captureDraft();if(Object.hasOwn(clients,state.client))client=state.client;if(Object.hasOwn(opportunities,state.current))current=state.current;if(['info','op'].includes(state.page))page=state.page;if(['home','detail','clients','solutions','present','summary','finish'].includes(state.screen))screen=state.screen;if(['home','clients'].includes(state.returnScreen))returnScreen=state.returnScreen;restoreDraft();render();});
       restoreImportDraft();
       render();
       if(globalThis.Tweak){const design={radius:18};const tweak=new Tweak({container:phone,onChange:()=>phone.style.setProperty('--vm-round',design.radius+'px')});tweak.addSlider(design,'radius',{label:'卡片圆角',min:6,max:24,step:2,unit:'px'});}
