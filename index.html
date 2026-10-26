@@ -1,0 +1,686 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="VisitMate 客户拜访助手：客户资料、合作机会、产品方案与拜访纪要。"><title>VisitMate · 客户拜访助手</title><style>body{margin:0;background:#f1f5f8;font-family:"Segoe UI","Microsoft YaHei",sans-serif}.cursor-interaction{cursor:pointer}button,a,input,textarea{touch-action:manipulation}@media(max-width:480px){body{background:#fff}#visitmate-no-location{padding:0!important}#visitmate-no-location .vm-phone{max-width:none;border:0;border-radius:0;box-shadow:none;min-height:100dvh}}</style><script defer src="assets/lucide.min.js"></script></head><body><div id="visitmate-no-location" class="viz-dotted-background">
+  <style>
+    #visitmate-no-location{padding:24px 12px;font-family:Inter,"Segoe UI","Microsoft YaHei",sans-serif;color-scheme:light dark}
+    #visitmate-no-location *{box-sizing:border-box}
+    #visitmate-no-location .vm-phone{--vm-bg:light-dark(#f4f6fa,#121923);--vm-panel:light-dark(#fff,#1c2633);--vm-ink:light-dark(#192c40,#e5edf5);--vm-soft:light-dark(#63768a,#a2b3c5);--vm-line:light-dark(#e7edf3,#334356);--vm-accent:light-dark(#087f79,#63d2c7);--vm-tint:light-dark(#e9f6f3,#203e3d);--vm-navy:light-dark(#142c43,#0c1522);--vm-onnav:#f5f9fc;--vm-round:18px;width:100%;max-width:430px;margin:auto;overflow:hidden;border:1px solid var(--vm-line);border-radius:30px;background:var(--vm-bg);color:var(--vm-ink);box-shadow:0 18px 55px light-dark(#18354d18,#0005);font-size:14px;line-height:1.6}
+    #visitmate-no-location button,#visitmate-no-location a{font:inherit;-webkit-tap-highlight-color:transparent}
+    #visitmate-no-location button{cursor:inherit}
+    #visitmate-no-location button:focus-visible,#visitmate-no-location a:focus-visible{outline:3px solid var(--vm-accent);outline-offset:3px}
+    #visitmate-no-location button{border:0;background:transparent;color:inherit}
+    #visitmate-no-location .vm-head{padding:18px 22px 21px;background:var(--vm-navy);color:var(--vm-onnav)}
+    #visitmate-no-location .vm-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    #visitmate-no-location .vm-brand{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:600;letter-spacing:-.3px}
+    #visitmate-no-location .vm-logo{display:grid;place-items:center;width:30px;height:30px;border-radius:9px;background:#61c9b5;color:#102c35}
+    #visitmate-no-location svg{width:17px;height:17px;flex-shrink:0}
+    #visitmate-no-location .vm-demo{font-size:11px;color:#bfcedb;border:1px solid #ffffff30;padding:2px 8px;border-radius:20px}
+    #visitmate-no-location .vm-crumb{margin-top:20px;font-size:12px;color:#b2c5d6}
+    #visitmate-no-location h1{font-size:22px;line-height:1.35;margin:5px 0 10px;font-weight:600;letter-spacing:-.6px}
+    #visitmate-no-location .vm-tags{display:flex;flex-wrap:wrap;gap:6px;font-size:11px}
+    #visitmate-no-location .vm-tags span{padding:2px 8px;border-radius:5px;background:#ffffff14;color:#d9e5ed}
+    #visitmate-no-location .vm-tags span:first-child{color:#9de7c7;background:#78e1b31a}
+    #visitmate-no-location .vm-contact{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:17px;font-size:12px;color:#c9d8e4}
+    #visitmate-no-location .vm-customer-switch{display:flex;align-items:center;gap:5px;color:#9fe2d3;padding:5px 0;min-height:32px}
+    #visitmate-no-location .vm-tabs{display:flex;padding:0 20px;background:var(--vm-panel);border-bottom:1px solid var(--vm-line);gap:25px}
+    #visitmate-no-location .vm-tabs button{position:relative;min-height:53px;padding:12px 2px;color:var(--vm-soft);font-weight:500}
+    #visitmate-no-location .vm-tabs button[aria-selected=true]{color:var(--vm-accent)}
+    #visitmate-no-location .vm-tabs button[aria-selected=true]:after{content:"";height:3px;background:var(--vm-accent);border-radius:4px;position:absolute;bottom:0;left:0;right:0}
+    #visitmate-no-location .vm-count{display:inline-block;margin-left:5px;font-size:11px;background:var(--vm-tint);padding:0 6px;border-radius:4px;color:var(--vm-accent)}
+    #visitmate-no-location .vm-content{padding:18px}
+    #visitmate-no-location [hidden]{display:none!important}
+    #visitmate-no-location .vm-section-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px}
+    #visitmate-no-location h2{font-size:14px;margin:0;font-weight:600}
+    #visitmate-no-location .vm-caption{font-size:11px;color:var(--vm-soft)}
+    #visitmate-no-location .vm-opportunities{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+    #visitmate-no-location .vm-opportunity{background:var(--vm-panel);border:1px solid var(--vm-line);padding:13px 12px;text-align:left;border-radius:var(--vm-round);min-width:0;min-height:112px}
+    #visitmate-no-location .vm-opportunity[aria-pressed=true]{background:var(--vm-tint);border-color:var(--vm-accent)}
+    #visitmate-no-location .vm-opportunity strong{display:block;font-size:14px;font-weight:600;margin:8px 0 3px;line-height:1.35}
+    #visitmate-no-location .vm-opportunity small{display:block;font-size:11px;color:var(--vm-soft)}
+    #visitmate-no-location .vm-op-meta{display:flex;align-items:center;justify-content:space-between;color:var(--vm-accent);font-size:11px;gap:4px}
+    #visitmate-no-location .vm-box{background:var(--vm-panel);border:1px solid var(--vm-line);border-radius:var(--vm-round);padding:16px;margin-bottom:12px}
+    #visitmate-no-location .vm-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    #visitmate-no-location .vm-date{color:var(--vm-soft);font-size:12px}
+    #visitmate-no-location .vm-pill{font-size:11px;border-radius:5px;padding:2px 7px;background:var(--vm-tint);color:var(--vm-accent);white-space:nowrap}
+    #visitmate-no-location h3{font-size:15px;margin:10px 0 4px;font-weight:600}
+    #visitmate-no-location p{margin:5px 0;font-size:13px}
+    #visitmate-no-location .vm-muted{color:var(--vm-soft)}
+    #visitmate-no-location .vm-subtitle{font-size:12px;font-weight:600;margin:16px 0 7px;display:flex;gap:6px;align-items:center}
+    #visitmate-no-location .vm-task{display:flex;align-items:flex-start;gap:9px;padding:10px 0;border-top:1px solid var(--vm-line)}
+    #visitmate-no-location .vm-task input{accent-color:var(--vm-accent);width:17px;height:17px;margin:3px 0 0;flex-shrink:0}
+    #visitmate-no-location .vm-task label{flex:1;cursor:inherit;font-size:13px}
+    #visitmate-no-location .vm-task label small{display:block;color:var(--vm-soft);font-size:11px;margin-top:3px}
+    #visitmate-no-location .vm-task input:checked+label>span{text-decoration:line-through;color:var(--vm-soft)}
+    #visitmate-no-location .vm-follow{padding:11px 12px;background:var(--vm-bg);border-radius:10px;border-left:3px solid var(--vm-accent);font-size:12px}
+    #visitmate-no-location .vm-follow small{display:block;color:var(--vm-soft);margin-bottom:4px;font-size:11px}
+    #visitmate-no-location .vm-history{display:flex;gap:10px;align-items:flex-start;padding:3px 4px 12px;font-size:12px;color:var(--vm-soft)}
+    #visitmate-no-location .vm-history i{margin-top:3px}
+    #visitmate-no-location .vm-primary{display:flex;align-items:center;justify-content:center;gap:7px;min-height:44px;width:100%;background:var(--vm-accent);color:light-dark(#fff,#102b2c);border-radius:12px;font-weight:500}
+    #visitmate-no-location .vm-ai{display:flex;gap:7px;align-items:flex-start;font-size:12px;color:var(--vm-accent);padding:11px 0 1px;margin-top:12px;border-top:1px solid var(--vm-line)}
+    #visitmate-no-location .vm-ai svg{margin-top:2px}
+    #visitmate-no-location .vm-bottom{display:flex;justify-content:space-around;padding:12px 8px 14px;background:var(--vm-panel);border-top:1px solid var(--vm-line);font-size:11px;color:var(--vm-soft)}
+    #visitmate-no-location .vm-bottom span{display:flex;align-items:center;gap:5px}
+    #visitmate-no-location .vm-bottom .vm-current{color:var(--vm-accent)}
+    #visitmate-no-location .vm-capital{display:flex;gap:32px;padding:8px 0 17px;border-bottom:1px solid var(--vm-line)}
+    #visitmate-no-location .vm-capital small{display:block;font-size:11px;color:var(--vm-soft)}
+    #visitmate-no-location .vm-capital strong{display:block;font-size:22px;font-weight:600;letter-spacing:-.5px;margin-top:3px}
+    #visitmate-no-location .vm-capital strong span{font-size:12px;font-weight:400;margin-left:4px}
+    #visitmate-no-location dl{margin:12px 0 0;font-size:12px;display:grid;grid-template-columns:95px 1fr;gap:12px 8px}
+    #visitmate-no-location dt{color:var(--vm-soft)}
+    #visitmate-no-location dd{margin:0;overflow-wrap:anywhere}
+    #visitmate-no-location .vm-source{font-size:11px;color:var(--vm-soft);margin-top:16px;padding-top:12px;border-top:1px solid var(--vm-line)}
+    #visitmate-no-location .vm-link{display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--vm-ink);text-decoration:none;padding:13px 0;min-height:48px}
+    #visitmate-no-location .vm-link+.vm-link{border-top:1px solid var(--vm-line)}
+    #visitmate-no-location .vm-link small{display:block;color:var(--vm-soft);font-size:11px}
+    #visitmate-no-location .vm-copy{display:flex;align-items:center;gap:5px;color:var(--vm-accent);padding:6px 0;min-height:35px;font-size:12px}
+    #visitmate-no-location .vm-footer-note{text-align:center;font-size:11px;color:var(--vm-soft);margin:12px 0 0}
+    #visitmate-no-location .vm-form{margin-top:12px;padding-top:12px;border-top:1px solid var(--vm-line)}
+    #visitmate-no-location .vm-capture-row{display:flex;gap:8px;flex-wrap:wrap;margin:9px 0}
+    #visitmate-no-location .vm-capture-note{font-size:11px;color:var(--vm-soft);margin:0 0 9px}
+    #visitmate-no-location .vm-upload{display:inline-flex;align-items:center;gap:6px}
+    #visitmate-no-location .vm-image-preview{display:block;max-width:100%;max-height:210px;object-fit:contain;border-radius:12px;margin:8px 0}
+    #visitmate-no-location .vm-image-preview[hidden]{display:none}
+    #visitmate-no-location .vm-contact-form{display:grid;grid-template-columns:1fr 1fr auto;gap:8px}
+    #visitmate-no-location .vm-contact-form input{min-width:0;width:100%;padding:10px;border:1px solid var(--vm-line);border-radius:9px;background:var(--vm-bg);color:var(--vm-ink);font:inherit}
+    #visitmate-no-location .vm-contact-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 0;border-bottom:1px solid var(--vm-line);font-size:12px}
+    #visitmate-no-location .vm-contact-list:empty{display:none}
+    #visitmate-no-location .vm-import{margin:12px 0;padding:13px;background:var(--vm-panel);border:1px solid var(--vm-line);border-radius:12px}
+    #visitmate-no-location .vm-import label{display:block;font-size:12px;color:var(--vm-soft);margin:8px 0 4px}
+    #visitmate-no-location .vm-import input,#visitmate-no-location .vm-import textarea,#visitmate-no-location .vm-voice select{width:100%;min-width:0;font:inherit;font-size:16px;padding:9px;border:1px solid var(--vm-line);border-radius:8px;background:var(--vm-bg);color:var(--vm-ink)}
+    #visitmate-no-location .vm-import textarea{resize:vertical;min-height:80px}
+    #visitmate-no-location .vm-import-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    #visitmate-no-location .vm-import-wide{grid-column:1/-1}
+    #visitmate-no-location .vm-voice{background:var(--vm-tint);padding:12px;border-radius:10px;margin:8px 0}
+    #visitmate-no-location .vm-voice .vm-capture-row{align-items:center}
+    #visitmate-no-location .vm-voice select{width:auto;max-width:100%;font-size:14px}
+    #visitmate-no-location .vm-interim{font-size:12px;color:var(--vm-soft);overflow-wrap:anywhere;min-height:20px}
+    #visitmate-no-location button:disabled{opacity:.5;cursor:default}
+    #visitmate-no-location .vm-contact-details{display:block;font-size:11px;color:var(--vm-soft);overflow-wrap:anywhere}
+    @media(max-width:480px){#visitmate-no-location .vm-contact-form{grid-template-columns:1fr 1fr}#visitmate-no-location .vm-contact-form button{grid-column:1/-1}}
+    #visitmate-no-location .vm-form label{display:block;font-size:12px;color:var(--vm-soft);margin:8px 0 5px}
+    #visitmate-no-location .vm-form textarea{width:100%;font:inherit;color:var(--vm-ink);background:var(--vm-bg);border:1px solid var(--vm-line);border-radius:9px;padding:10px;resize:vertical;min-height:85px}
+    #visitmate-no-location .vm-status{font-size:11px;color:var(--vm-accent);text-align:center;min-height:18px;margin-top:7px}
+    @media(max-width:380px){#visitmate-no-location{padding:10px 0}#visitmate-no-location .vm-phone{border-radius:20px}#visitmate-no-location .vm-head{padding:16px}#visitmate-no-location .vm-content{padding:13px}#visitmate-no-location .vm-box{padding:13px}#visitmate-no-location .vm-opportunity{padding:11px 9px}#visitmate-no-location .vm-brand{font-size:16px}}
+  </style>
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js"></script>
+  <style>
+    #visitmate-no-location .vm-home{background:var(--vm-panel);padding:0 20px 20px;border-radius:30px}
+    #visitmate-no-location .vh-statusbar{display:flex;align-items:center;justify-content:space-between;padding:15px 7px 8px;font-size:12px;font-weight:600}
+    #visitmate-no-location .vh-statusbar div{display:flex;gap:5px;align-items:center}
+    #visitmate-no-location .vh-titlebar{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;min-height:55px;border-bottom:1px solid var(--vm-line)}
+    #visitmate-no-location .vh-titlebar h1{font-size:20px;text-align:center;margin:0;font-weight:600;letter-spacing:0}
+    #visitmate-no-location .vh-titlebar button{display:grid;place-items:center;min-height:44px;padding:0}
+    #visitmate-no-location .vh-titlebar svg{width:21px;height:21px}
+    #visitmate-no-location .vh-customer{display:flex;gap:12px;align-items:center;padding-bottom:16px}
+    #visitmate-no-location .vh-campus{position:relative;width:85px;min-width:72px;height:82px;overflow:hidden;border-radius:11px;background:linear-gradient(160deg,#a2d9f5 0%,#e6f4f9 50%,#7bbda4 51%,#3d986e 100%);display:grid;place-items:center;color:#e6f7ff}
+    #visitmate-no-location .vh-campus:after{content:"";position:absolute;width:56px;height:50px;left:17px;top:21px;background:repeating-linear-gradient(0deg,transparent 0px,transparent 6px,#b8d3dc 7px,#b8d3dc 9px),repeating-linear-gradient(90deg,#3c7c98 0px,#3c7c98 7px,#b8d3dc 8px,#b8d3dc 10px);transform:skewY(-8deg);border:3px solid #dcecef;box-shadow:-15px 12px 0 -4px #d5e4e8}
+    #visitmate-no-location .vh-customer-body{flex:1;min-width:0}
+    #visitmate-no-location .vh-customer h2{font-size:15px;margin:0 0 5px;line-height:1.45}
+    #visitmate-no-location .vh-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    #visitmate-no-location .vh-tile{position:relative;text-align:left;padding:14px 13px 13px;border:1px solid var(--vm-line);border-radius:14px;background:var(--vm-panel);box-shadow:0 3px 12px light-dark(#132a4110,#0002);min-height:128px;min-width:0}
+    #visitmate-no-location .vh-icon{width:43px;height:43px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,#2cd594,#00a570);color:#fff;margin-bottom:9px;box-shadow:0 3px 6px #00a57020}
+    #visitmate-no-location .vh-icon svg{width:23px;height:23px}
+    #visitmate-no-location .vh-blue{background:linear-gradient(145deg,#40b8ff,#0879f5)}
+    #visitmate-no-location .vh-purple{background:linear-gradient(145deg,#bd7bff,#8039ed)}
+    #visitmate-no-location .vh-orange{background:linear-gradient(145deg,#ffb155,#ff7718)}
+    #visitmate-no-location .vh-tile strong{font-size:15px;display:block;font-weight:600}
+    #visitmate-no-location .vh-tile small{font-size:11px;display:block;color:var(--vm-soft);margin-top:3px}
+    #visitmate-no-location .vh-chevron{position:absolute;top:23px;right:12px;color:var(--vm-soft);width:16px;height:16px}
+    #visitmate-no-location .vh-end{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:48px;margin-top:17px;border-radius:11px;background:linear-gradient(110deg,#008d70,#006b59);color:#fff;font-size:14px;font-weight:500}
+    #visitmate-no-location .vh-foot{margin:12px 0 0;text-align:center;color:var(--vm-soft);font-size:11px}
+    #visitmate-no-location .vh-inline-panel{padding:14px;margin-top:14px;border:1px solid var(--vm-line);border-radius:12px;background:var(--vm-bg)}
+    #visitmate-no-location .vh-inline-panel h2{margin-bottom:7px}
+    #visitmate-no-location .vh-inline-panel p{font-size:12px}
+    #visitmate-no-location .vh-backbar{display:flex;gap:8px;align-items:center;background:var(--vm-navy);color:var(--vm-onnav);padding:7px 15px 0;font-size:12px}
+    #visitmate-no-location .vh-backbar button{display:flex;align-items:center;gap:4px;min-height:38px;padding:0}
+    #visitmate-no-location .vm-phone{max-width:400px}
+    #visitmate-no-location .vm-head{padding-top:10px}
+    #visitmate-no-location .vh-toast{margin-top:10px;color:var(--vm-accent);font-size:11px;text-align:center}
+  </style>
+  <style>
+    #visitmate-no-location .vc-list{padding:0 20px 18px;background:var(--vm-panel)}
+    #visitmate-no-location .vc-list-title{padding:16px 0 8px;display:flex;align-items:center;justify-content:space-between}
+    #visitmate-no-location .vc-list-title h2{font-size:22px;letter-spacing:-.5px}
+    #visitmate-no-location .vc-description{font-size:12px;color:var(--vm-soft);margin-bottom:15px}
+    #visitmate-no-location .vc-company{width:100%;text-align:left;display:flex;align-items:center;gap:12px;padding:14px 0;border-bottom:1px solid var(--vm-line);min-height:75px}
+    #visitmate-no-location .vc-monogram{display:grid;place-items:center;width:43px;height:43px;flex-shrink:0;border-radius:12px;background:var(--vm-tint);color:var(--vm-accent);font-size:13px;font-weight:600;letter-spacing:-.5px}
+    #visitmate-no-location .vc-company-body{flex:1;min-width:0}
+    #visitmate-no-location .vc-company strong{display:block;font-size:15px;font-weight:500}
+    #visitmate-no-location .vc-company small{display:block;font-size:11px;color:var(--vm-soft);margin-top:3px}
+    #visitmate-no-location .vc-arrow{color:var(--vm-soft);font-size:20px;font-weight:400}
+    #visitmate-no-location .vc-empty{text-align:center;border:1px dashed var(--vm-line);border-radius:15px;background:var(--vm-panel);padding:24px 15px;margin:0 0 15px}
+    #visitmate-no-location .vc-empty h3{margin:0 0 8px;font-size:15px}
+    #visitmate-no-location .vc-empty p{font-size:12px;color:var(--vm-soft)}
+    #visitmate-no-location .vc-empty-label{display:block;font-size:12px;color:var(--vm-accent);margin-bottom:12px}
+    #visitmate-no-location .vm-form textarea{font-size:16px}
+    #visitmate-no-location .vm-capital{flex-wrap:wrap;gap:12px 32px}
+    #visitmate-no-location .vm-capital strong{font-size:18px}
+    #visitmate-no-location .vc-return{display:flex;align-items:center;justify-content:center;gap:6px;min-height:42px;font-size:12px;color:var(--vm-accent);width:100%;padding-top:10px}
+    #visitmate-no-location .vm-task{display:block}
+    #visitmate-no-location .vm-task p{font-size:13px}
+    @media(max-width:370px){#visitmate-no-location .vc-list{padding:0 15px 16px}}
+  </style>
+  <style>
+    #visitmate-no-location .vi-context{border-radius:12px;background:var(--vm-tint);color:var(--vm-accent);padding:12px 13px;margin:0 0 10px;font-size:12px}
+    #visitmate-no-location .vi-context strong{font-weight:500;display:block;margin-bottom:3px}
+    #visitmate-no-location .vi-context p{font-size:11px;margin:3px 0 0}
+    #visitmate-no-location .vi-source-link{color:var(--vm-accent);font-size:11px;text-decoration:none;display:inline-block;min-height:28px;padding:5px 0}
+    #visitmate-no-location .vi-source-link:hover{text-decoration:underline}
+    #visitmate-no-location .vi-eyebrow{font-size:11px;color:var(--vm-accent);display:flex;gap:6px;align-items:center;margin-bottom:7px}
+    #visitmate-no-location .vi-insight{background:var(--vm-tint);padding:14px 15px;border-radius:var(--vm-round);margin-bottom:16px}
+    #visitmate-no-location .vi-insight h3{margin:0 0 5px;font-size:15px}
+    #visitmate-no-location .vi-insight p{font-size:12px;margin:0}
+    #visitmate-no-location .vi-selector{display:flex;gap:7px;flex-wrap:wrap;margin:9px 0 12px}
+    #visitmate-no-location .vi-selector button{font-size:12px;padding:8px 10px;border-radius:8px;background:var(--vm-bg);color:var(--vm-soft);min-height:37px;border:1px solid var(--vm-line)}
+    #visitmate-no-location .vi-selector button[aria-pressed=true]{background:var(--vm-accent);color:light-dark(#fff,#102b2c);border-color:var(--vm-accent)}
+    #visitmate-no-location .vi-kv{margin-top:12px}
+    #visitmate-no-location .vi-kv small{display:block;color:var(--vm-soft);font-size:11px;margin-bottom:3px}
+    #visitmate-no-location .vi-kv p{font-size:12px;margin:0}
+    #visitmate-no-location .vi-assumption{font-size:11px;color:var(--vm-soft);padding-top:10px;border-top:1px solid var(--vm-line);margin-top:11px}
+    #visitmate-no-location .vi-secondary{display:flex;justify-content:center;align-items:center;gap:6px;border:1px solid var(--vm-line);border-radius:10px;width:100%;min-height:42px;margin-top:9px;color:var(--vm-accent);font-size:12px}
+    #visitmate-no-location .vi-plan{padding:15px;background:var(--vm-panel);border:1px solid var(--vm-line);border-radius:var(--vm-round);margin-top:13px}
+    #visitmate-no-location .vi-step{padding:13px 0;border-bottom:1px solid var(--vm-line)}
+    #visitmate-no-location .vi-step strong{font-size:13px;font-weight:500}
+    #visitmate-no-location .vi-step p{font-size:12px;margin-top:5px}
+    #visitmate-no-location .vi-step small{font-size:11px;color:var(--vm-accent);display:block;margin-top:5px}
+    #visitmate-no-location .vi-test-list{padding-left:17px;margin:6px 0;font-size:12px}
+    #visitmate-no-location .vi-test-list li{margin:5px 0}
+    #visitmate-no-location .vi-disclosure{background:var(--vm-panel);border:1px solid var(--vm-line);border-radius:12px;padding:12px 13px;margin-top:14px}
+    #visitmate-no-location .vi-disclosure summary{font-size:12px;font-weight:500;min-height:25px;align-content:center}
+    #visitmate-no-location .vi-disclosure .vm-box{padding:12px 0 0;border:0;margin-bottom:0}
+    #visitmate-no-location .vi-lead{border:1px solid var(--vm-accent);border-radius:13px;padding:13px;margin-bottom:16px;background:var(--vm-tint)}
+    #visitmate-no-location .vi-lead strong{display:block;font-size:13px;margin:6px 0}
+    #visitmate-no-location .vi-lead p{font-size:12px}
+    #visitmate-no-location .vi-lead .vm-caption{margin-top:8px}
+    #visitmate-no-location .vi-generated{font-size:11px;color:var(--vm-soft);margin-top:12px}
+    #visitmate-no-location .vi-company-data{margin-top:14px}
+    #visitmate-no-location .vi-data-heading{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:0 0 9px}
+    #visitmate-no-location .vi-data-heading h2{font-size:15px}
+    #visitmate-no-location .vi-data-heading small{font-size:10px;color:var(--vm-soft)}
+    #visitmate-no-location .vi-data-card{background:var(--vm-panel);border:1px solid var(--vm-line);border-radius:14px;padding:13px;margin:9px 0}
+    #visitmate-no-location .vi-data-card h3{font-size:13px;margin:0 0 8px}
+    #visitmate-no-location .vi-data-card p{font-size:11px;margin:6px 0;color:var(--vm-soft)}
+    #visitmate-no-location .vi-data-table-wrap{overflow:visible;margin:0 -2px}
+    #visitmate-no-location .vi-data-table{border-collapse:collapse;width:100%;min-width:0;font-size:11px;table-layout:fixed}
+    #visitmate-no-location .vi-data-table th,#visitmate-no-location .vi-data-table td{text-align:left;padding:7px 6px;border-bottom:1px solid var(--vm-line);vertical-align:top}
+    #visitmate-no-location .vi-data-table th{font-weight:500;color:var(--vm-soft)}
+    #visitmate-no-location .vi-data-kpis{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    #visitmate-no-location .vi-data-kpi{padding:9px;background:var(--vm-bg);border-radius:10px}
+    #visitmate-no-location .vi-data-kpi small{display:block;font-size:10px;color:var(--vm-soft)}
+    #visitmate-no-location .vi-data-kpi strong{font-size:15px;font-weight:500;display:block;margin-top:2px}
+    #visitmate-no-location .vi-data-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:7px}
+    @media(max-width:480px){#visitmate-no-location .vi-data-table,#visitmate-no-location .vi-data-table thead,#visitmate-no-location .vi-data-table tbody,#visitmate-no-location .vi-data-table tr,#visitmate-no-location .vi-data-table th,#visitmate-no-location .vi-data-table td{display:block}#visitmate-no-location .vi-data-table thead{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}#visitmate-no-location .vi-data-table tbody tr{padding:7px 0;border-bottom:1px solid var(--vm-line)}#visitmate-no-location .vi-data-table td{display:grid;grid-template-columns:100px minmax(0,1fr);gap:8px;padding:4px 5px;border:0;overflow-wrap:anywhere}#visitmate-no-location .vi-data-table td:before{content:attr(data-label);color:var(--vm-soft)}}
+    #visitmate-no-location #vm-info>h2{margin-bottom:12px}
+    #visitmate-no-location .vc-company small{font-size:11px}
+    @media(pointer:coarse){#visitmate-no-location .vi-selector button,#visitmate-no-location .vi-source-link{min-height:44px}}
+  </style>
+  <style>
+    #visitmate-no-location .vr-screen{background:var(--vm-bg);min-height:760px}
+    #visitmate-no-location .vr-head{padding:18px 19px 20px;background:var(--vm-navy);color:var(--vm-onnav)}
+    #visitmate-no-location .vr-back{display:flex;align-items:center;gap:5px;min-height:35px;font-size:12px;padding:0;margin-bottom:12px}
+    #visitmate-no-location .vr-head h1{font-size:22px;margin:5px 0 7px}
+    #visitmate-no-location .vr-head p{font-size:12px;color:#b9cbd8;margin:0}
+    #visitmate-no-location .vr-body{padding:18px}
+    #visitmate-no-location .vr-cover{padding:18px;border-radius:15px;background:var(--vm-tint);margin-bottom:15px;color:var(--vm-accent)}
+    #visitmate-no-location .vr-cover h2{font-size:18px;margin:0 0 7px}
+    #visitmate-no-location .vr-cover p{font-size:12px;margin:0}
+    #visitmate-no-location .vr-topic{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+    #visitmate-no-location .vr-topic .vh-icon{margin:0;flex-shrink:0}
+    #visitmate-no-location .vr-topic h2{font-size:16px;margin:0 0 2px}
+    #visitmate-no-location .vr-topic small{font-size:11px;color:var(--vm-soft)}
+    #visitmate-no-location .vr-doc{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px 0;font-size:12px;border-top:1px solid var(--vm-line)}
+    #visitmate-no-location .vr-doc span{display:flex;align-items:center;gap:7px}
+    #visitmate-no-location .vr-doc small{color:var(--vm-soft);font-size:11px;white-space:nowrap}
+    #visitmate-no-location .vr-link{display:flex;align-items:center;justify-content:center;min-height:40px;border-radius:9px;background:var(--vm-tint);color:var(--vm-accent);font-size:12px;text-decoration:none;margin-top:10px}
+    #visitmate-no-location .vr-input-label{display:block;color:var(--vm-soft);font-size:12px;margin-bottom:7px}
+    #visitmate-no-location .vr-input{display:block;font:inherit;width:100%;border:1px solid var(--vm-line);border-radius:9px;background:var(--vm-panel);color:var(--vm-ink);padding:10px;margin-bottom:12px;font-size:13px;resize:vertical}
+    #visitmate-no-location .vr-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:13px}
+    #visitmate-no-location .vr-check{display:flex;gap:8px;align-items:flex-start;margin:10px 0;font-size:12px;color:var(--vm-soft)}
+    #visitmate-no-location .vr-check input{accent-color:var(--vm-accent);width:17px;height:17px;flex-shrink:0;margin:2px 0}
+    #visitmate-no-location .vr-review{margin-top:12px;font-size:11px;color:var(--vm-soft);text-align:center}
+    #visitmate-no-location .vr-signoff{display:flex;align-items:center;gap:10px;padding:16px;background:var(--vm-tint);border-radius:13px;color:var(--vm-accent);margin-bottom:14px}
+    #visitmate-no-location .vr-signoff svg{width:28px;height:28px}
+    #visitmate-no-location .vr-signoff strong{display:block;font-size:15px;font-weight:500}
+    #visitmate-no-location .vr-signoff small{font-size:11px}
+    #visitmate-no-location .vr-action-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    #visitmate-no-location .vr-sample-banner{background:var(--vm-tint);color:var(--vm-accent);padding:9px 12px;border-radius:9px;font-size:11px;margin-bottom:14px}
+  </style>
+  <style>
+    #visitmate-no-location .vn-intro{padding:26px 0 20px}
+    #visitmate-no-location .vn-intro>span{display:block;font-size:11px;letter-spacing:1.6px;color:var(--vm-accent);margin-bottom:9px}
+    #visitmate-no-location .vn-intro h2{font-size:22px;letter-spacing:-.5px;margin:0 0 6px}
+    #visitmate-no-location .vn-intro p{font-size:12px;color:var(--vm-soft);margin:0}
+    #visitmate-no-location .vh-customer{padding:14px;background:var(--vm-bg);border-radius:15px;margin-bottom:21px;gap:12px}
+    #visitmate-no-location .vh-campus{width:61px;min-width:61px;height:65px}
+    #visitmate-no-location .vh-campus:after{left:14px;top:18px;width:41px;height:39px}
+    #visitmate-no-location .vh-customer h2{margin:4px 0;font-size:17px}
+    #visitmate-no-location .vn-eyebrow,#visitmate-no-location .vn-caption{font-size:11px;color:var(--vm-soft)}
+    #visitmate-no-location .vn-switch{display:flex;align-items:center;gap:2px;padding:4px 0;color:var(--vm-accent);min-height:40px;font-size:12px;white-space:nowrap}
+    #visitmate-no-location .vn-switch svg{width:14px;height:14px}
+    #visitmate-no-location .vh-grid{gap:12px}
+    #visitmate-no-location .vh-tile{padding:17px 15px;min-height:143px;box-shadow:none;border-radius:15px}
+    #visitmate-no-location .vh-icon{background:var(--vm-tint);color:var(--vm-accent);box-shadow:none;border-radius:13px;width:43px;height:43px;margin-bottom:14px}
+    #visitmate-no-location .vh-tile strong{font-size:16px}
+    #visitmate-no-location .vh-tile small{font-size:11px;margin-top:5px}
+    #visitmate-no-location .vh-end{margin-top:22px;background:var(--vm-accent);min-height:47px;border-radius:12px;color:light-dark(#fff,#102b2c)}
+    #visitmate-no-location .vh-foot{margin-top:17px}
+    @media(max-width:370px){#visitmate-no-location .vm-home{padding:0 16px 20px}#visitmate-no-location .vh-tile{padding:15px 12px}#visitmate-no-location .vh-customer{padding:12px;gap:9px}#visitmate-no-location .vh-campus{width:52px;min-width:52px}#visitmate-no-location .vh-customer h2{font-size:16px}}
+  </style>
+  <div class="vm-phone" aria-label="VisitMate Huntsman 客户资料与合作机会分析">
+    <section id="vr-solutions" class="vr-screen" hidden>
+      <header class="vr-head"><button type="button" class="vr-back cursor-interaction" data-review-back><i data-lucide="chevron-left" aria-hidden="true"></i>返回客户拜访</button><div class="vm-tags"><span>内部资料</span><span>Huntsman</span></div><h1>展示方案</h1><p>面向 <span data-customer-name>宁德时代</span> 的技术交流资料</p></header>
+      <main class="vr-body">
+        <div class="vr-cover"><h2>两条业务方向，一套沟通资料</h2><p>从应用场景出发，讨论技术路线、验证边界与下一步。正式对客资料需内部审定。</p></div>
+        <article class="vm-box"><div class="vr-topic"><span class="vh-icon"><i data-lucide="layers" aria-hidden="true"></i></span><div><h2>灌封胶 Cell</h2><small>电芯固定 · 包封 · 保护</small></div></div><p>参考候选技术：SHOKLESS™ 聚氨酯体系。具体牌号和目标性能由应用工程师确认。</p><div class="vr-doc"><span><i data-lucide="file-text" aria-hidden="true"></i>产品与应用介绍</span><small>官方资料</small></div><div class="vr-doc"><span><i data-lucide="flask-conical" aria-hidden="true"></i>技术参数 / TDS / SDS</span><small>待内部提供</small></div><div class="vr-doc"><span><i data-lucide="play" aria-hidden="true"></i>应用案例与工艺视频</span><small>待上传</small></div><a class="vr-link cursor-interaction" href="https://www.huntsman.com/news/media-releases/detail/577/huntsman-launches-new-shokless-polyurethane-systems-to" target="_blank" rel="noopener noreferrer">查看 Huntsman 官方技术资料 ↗</a></article>
+        <article class="vm-box"><div class="vr-topic"><span class="vh-icon vh-blue"><i data-lucide="battery" aria-hidden="true"></i></span><div><h2>Battery Cover</h2><small>电池上盖 · 复合材料</small></div></div><p>参考 VITROX® WCM 树脂路线，与增强材料、连接、密封和成型工艺共同评估。</p><div class="vr-doc"><span><i data-lucide="file-text" aria-hidden="true"></i>材料路线与上盖应用</span><small>官方资料</small></div><div class="vr-doc"><span><i data-lucide="boxes" aria-hidden="true"></i>样件 / 成型工艺说明</span><small>待内部提供</small></div><a class="vr-link cursor-interaction" href="https://www.huntsman.co.jp/pdf/polyurethanesystem_3.pdf" target="_blank" rel="noopener noreferrer">查看官方电池上盖应用资料 ↗</a></article>
+        <button type="button" class="vm-primary cursor-interaction" data-review-action="present"><i data-lucide="presentation" aria-hidden="true"></i>进入客户展示模式</button><p class="vr-review">案例与视频为资料位，尚未上传真实文件</p>
+      </main>
+    </section>
+    <section id="vr-present" class="vr-screen" hidden>
+      <header class="vr-head"><button type="button" class="vr-back cursor-interaction" data-review-back><i data-lucide="chevron-left" aria-hidden="true"></i>退出客户展示</button><div class="vm-tags"><span>Huntsman</span><span>客户展示</span></div><h1>电池保护与轻量化材料</h1><p>围绕应用场景，共同探索材料方案</p></header>
+      <main class="vr-body"><div class="vr-cover"><h2>从电芯到电池上盖</h2><p>固定与保护 / 复合上盖材料<br>需求确认 → 样件验证 → 部件与工艺评估</p></div>
+        <article class="vm-box"><div class="vr-topic"><span class="vh-icon"><i data-lucide="layers" aria-hidden="true"></i></span><div><h2>Cell 包封与固定</h2><small>SHOKLESS™ 聚氨酯候选体系</small></div></div><p>结合实际电芯、包体和工艺条件，讨论固定、热机械保护与制造适配。</p><div class="vi-kv"><small>技术交流重点</small><p>应用位置 / 热路径 / 固化与填充 / 验证计划</p></div><a class="vr-link cursor-interaction" href="https://www.huntsman.com/news/media-releases/detail/577/huntsman-launches-new-shokless-polyurethane-systems-to" target="_blank" rel="noopener noreferrer">查看官方应用介绍 ↗</a></article>
+        <article class="vm-box"><div class="vr-topic"><span class="vh-icon vh-blue"><i data-lucide="battery" aria-hidden="true"></i></span><div><h2>Battery Cover 电池上盖</h2><small>VITROX® WCM 复合材料路线</small></div></div><p>结合增强材料、上盖结构及成型工艺，研究质量、热屏障与部件性能。</p><div class="vi-kv"><small>技术交流重点</small><p>功能边界 / 结构与连接 / 密封 / 成型与验证</p></div><a class="vr-link cursor-interaction" href="https://www.huntsman.co.jp/pdf/polyurethanesystem_3.pdf" target="_blank" rel="noopener noreferrer">查看官方应用资料 ↗</a></article>
+        <p class="vr-review">界面示意 · 正式对客资料待内部审定<br>此模式仅展示产品与应用资料</p>
+      </main>
+    </section>
+    <section id="vr-summary" class="vr-screen" hidden>
+      <header class="vr-head"><button type="button" class="vr-back cursor-interaction" data-review-back><i data-lucide="chevron-left" aria-hidden="true"></i>返回客户拜访</button><div class="vm-tags"><span>内部资料</span><span>草稿待复核</span></div><h1>生成拜访纪要</h1><p><span data-customer-name>宁德时代</span> · 按合作机会整理沟通内容</p></header>
+      <main class="vr-body"><div class="vr-sample-banner">效果图中的纪要为演示内容，非真实客户拜访。</div><div class="vm-box"><h2>本次纪要来源</h2><p id="vr-summary-input">当前客户尚无本次预览的拜访记录。</p><div class="vr-chips"><span class="vm-pill">Cell</span><span class="vm-pill">Battery Cover</span><span class="vm-pill">按机会归档</span></div></div>
+        <div class="vm-box"><label class="vr-input-label" for="vr-summary-text">纪要草稿</label><textarea class="vr-input" id="vr-summary-text" rows="5">【演示】本次交流拟核实目标包型、材料应用位置及选型决定权。客户真实需求与项目窗口尚未确认。</textarea><label class="vr-input-label" for="vr-summary-action">Action · 事项 / 负责人 / 截止时间</label><textarea class="vr-input" id="vr-summary-action" rows="3">【演示】客户经理：安排技术交流；Huntsman FAE：准备需求确认表。负责人和截止日期待指定。</textarea><label class="vr-input-label" for="vr-summary-follow">Follow-up · 下次跟进</label><textarea class="vr-input" id="vr-summary-follow" rows="3">【演示】确认实际应用场景和客户认可的测试标准，再约定下一次技术评审。</textarea><label class="vr-check"><input type="checkbox" id="vr-verified"><span>已人工核对纪要内容、负责人和日期；需求推测仍按待验证线索保留。</span></label><button type="button" class="vm-primary cursor-interaction" data-review-action="save-summary">保存纪要草稿（预览）</button></div><p class="vr-review">当前展示整理流程与编辑界面，实时 AI 服务尚未接入</p><div class="vm-status" id="vr-summary-status" aria-live="polite"></div></main>
+    </section>
+    <section id="vr-finish" class="vr-screen" hidden>
+      <header class="vr-head"><button type="button" class="vr-back cursor-interaction" data-review-back><i data-lucide="chevron-left" aria-hidden="true"></i>返回客户拜访</button><div class="vm-tags"><span>内部资料</span><span>结束前复核</span></div><h1>结束拜访</h1><p><span data-customer-name>宁德时代</span> · 确认纪要与下一步</p></header>
+      <main class="vr-body"><div class="vr-signoff"><i data-lucide="clipboard-check" aria-hidden="true"></i><div><strong>本次拜访待确认结束</strong><small>效果图示例 · 未提交真实业务数据</small></div></div><div class="vm-box"><h2>拜访纪要</h2><p id="vr-finish-minutes">【演示】拟核实目标包型与材料应用位置，真实需求尚待客户确认。</p><div class="vi-kv"><small>Action</small><p id="vr-finish-action">【演示】客户经理安排技术交流，FAE 准备材料需求表。</p></div><div class="vi-kv"><small>Follow-up</small><p id="vr-finish-follow">【演示】确认项目责任人与下一次评审安排。</p></div></div><div class="vm-box"><h2>归档与跟进</h2><div class="vr-doc"><span>所属客户</span><span data-customer-name>宁德时代</span></div><div class="vr-doc"><span>业务方向</span><span>Cell / Battery Cover</span></div><div class="vr-doc"><span>客户需求状态</span><span class="vm-pill">待验证</span></div><div class="vr-doc"><span>负责人 / 截止日期</span><small>待人工确认</small></div></div><div class="vr-action-row"><button type="button" class="vi-secondary cursor-interaction" data-review-action="summary">返回编辑纪要</button><button type="button" class="vm-primary cursor-interaction" data-review-action="confirm-finish">确认结束（预览）</button></div><div class="vm-status" id="vr-finish-status" aria-live="polite"></div><p class="vr-review">此操作用于界面核对，尚未写入正式业务系统</p></main>
+    </section>
+    <section id="vm-clients" class="vc-list" aria-label="合作客户列表">
+      <div class="vh-statusbar"><span>9:41</span><div><i data-lucide="signal" aria-hidden="true"></i><i data-lucide="wifi" aria-hidden="true"></i><i data-lucide="battery-full" aria-hidden="true"></i></div></div>
+      <div class="vc-list-title"><h2>客户资料</h2><span class="vm-pill">合作客户 · 10</span></div>
+      <div class="vc-description">我们的合作企业</div>
+      <div class="vi-context"><strong>Huntsman 客户拜访</strong>灌封胶 Cell / Battery Cover 电池上盖<p>记录联系人、拜访 Report 和后续行动。</p></div>
+      <div aria-label="10家合作企业">
+        <button type="button" class="vc-company cursor-interaction" data-client="catl"><span class="vc-monogram">宁德</span><span class="vc-company-body"><strong>宁德时代</strong><small>已合作 · 工商资料待核验</small></span><span class="vc-arrow" aria-hidden="true">›</span></button>
+        <button type="button" class="vc-company cursor-interaction" data-client="byd"><span class="vc-monogram">比亚迪</span><span class="vc-company-body"><strong>比亚迪</strong><small>已合作 · 工商资料待核验</small></span><span class="vc-arrow" aria-hidden="true">›</span></button>
+        <button type="button" class="vc-company cursor-interaction" data-client="nio"><span class="vc-monogram">蔚来</span><span class="vc-company-body"><strong>蔚来汽车</strong><small>已合作 · 工商资料待核验</small></span><span class="vc-arrow" aria-hidden="true">›</span></button>
+        <button type="button" class="vc-company cursor-interaction" data-client="sunwoda"><span class="vc-monogram">欣旺达</span><span class="vc-company-body"><strong>欣旺达</strong><small>已合作 · 工商资料待核验</small></span><span class="vc-arrow" aria-hidden="true">›</span></button>
+        <button type="button" class="vc-company cursor-interaction" data-client="eve"><span class="vc-monogram">亿纬</span><span class="vc-company-body"><strong>亿纬锂能</strong><small>已合作 · 工商资料待核验</small></span><span class="vc-arrow" aria-hidden="true">›</span></button>
+        <button type="button" class="vc-company cursor-interaction" data-client="gotion"><span class="vc-monogram">国轩</span><span class="vc-company-body"><strong>国轩高科</strong><small>已合作 · 工商资料待核验</small></span><span class="vc-arrow" aria-hidden="true">›</span></button>
+        <button type="button" class="vc-company cursor-interaction" data-client="calb"><span class="vc-monogram">中航</span><span class="vc-company-body"><strong>中创新航</strong><small>已合作 · 工商资料待核验</small></span><span class="vc-arrow" aria-hidden="true">›</span></button>
+        <button type="button" class="vc-company cursor-interaction" data-client="xpeng"><span class="vc-monogram">小鹏</span><span class="vc-company-body"><strong>小鹏</strong><small>已合作 · 工商资料待核验</small></span><span class="vc-arrow" aria-hidden="true">›</span></button>
+        <button type="button" class="vc-company cursor-interaction" data-client="li"><span class="vc-monogram">理想</span><span class="vc-company-body"><strong>理想</strong><small>已合作 · 工商资料待核验</small></span><span class="vc-arrow" aria-hidden="true">›</span></button>
+        <button type="button" class="vc-company cursor-interaction" data-client="xiaomi"><span class="vc-monogram">小米</span><span class="vc-company-body"><strong>小米</strong><small>已合作 · 工商资料待核验</small></span><span class="vc-arrow" aria-hidden="true">›</span></button>
+      </div>
+      <button type="button" class="vc-return cursor-interaction" data-home-action="home">返回客户拜访首页</button>
+      <p class="vh-foot">合作关系由你提供 · 业务分析更新于 2026.10.22</p>
+    </section>
+    <section class="vm-home" id="vm-home" aria-label="客户拜访首页" hidden>
+      <div class="vh-statusbar"><span>9:41</span><div><i data-lucide="signal" aria-hidden="true"></i><i data-lucide="wifi" aria-hidden="true"></i><i data-lucide="battery-full" aria-hidden="true"></i></div></div>
+      <header class="vh-titlebar"><button type="button" class="cursor-interaction" aria-label="打开客户列表" data-home-action="list"><i data-lucide="users" aria-hidden="true"></i></button><h1>客户拜访</h1><button type="button" class="cursor-interaction" aria-label="更多" data-home-action="more"><i data-lucide="ellipsis" aria-hidden="true"></i></button></header>
+      <div class="vn-intro"><span>VISITMATE / HUNTSMAN</span><h2>客户资料与合作机会</h2><p>了解客户需求，推进每一次沟通。</p></div>
+      <div class="vh-customer"><div class="vh-campus" role="img" aria-label="企业示意图"></div><div class="vh-customer-body"><span class="vn-eyebrow">当前合作客户</span><h2 data-customer-name>宁德时代</h2><span class="vn-caption">合作客户 · 联系人待补充</span></div><button type="button" class="vn-switch cursor-interaction" data-home-action="list">切换<i data-lucide="chevron-right" aria-hidden="true"></i></button></div>
+      <div class="vh-grid">
+        <button type="button" class="vh-tile cursor-interaction" data-enter="info"><span class="vh-icon"><i data-lucide="file-user" aria-hidden="true"></i></span><i data-lucide="chevron-right" class="vh-chevron" aria-hidden="true"></i><strong>客户资料</strong><small>企业信息与需求分析</small></button>
+        <button type="button" class="vh-tile cursor-interaction" data-home-action="solutions"><span class="vh-icon"><i data-lucide="folder-open" aria-hidden="true"></i></span><i data-lucide="chevron-right" class="vh-chevron" aria-hidden="true"></i><strong>展示方案</strong><small>产品与应用资料</small></button>
+        <button type="button" class="vh-tile cursor-interaction" data-enter="op"><span class="vh-icon"><i data-lucide="handshake" aria-hidden="true"></i></span><i data-lucide="chevron-right" class="vh-chevron" aria-hidden="true"></i><strong>合作机会</strong><small>纪要与后续跟进</small></button>
+        <button type="button" class="vh-tile cursor-interaction" data-home-action="summary"><span class="vh-icon"><i data-lucide="notebook-pen" aria-hidden="true"></i></span><i data-lucide="chevron-right" class="vh-chevron" aria-hidden="true"></i><strong>生成纪要</strong><small>整理本次沟通</small></button>
+      </div>
+      <button type="button" class="vh-end cursor-interaction" data-home-action="finish"><i data-lucide="clipboard-list" aria-hidden="true"></i>结束拜访 · 生成纪要</button>
+      <div id="vh-panel" class="vh-inline-panel" hidden aria-live="polite"><h2 id="vh-panel-title"></h2><p id="vh-panel-text"></p></div>
+      <div class="vh-toast" id="vh-toast" aria-live="polite"></div>
+      <p class="vh-foot">VisitMate · 客户拜访助手 · 界面预览</p>
+    </section>
+    <div id="vm-detail" hidden>
+    <div class="vh-backbar"><button type="button" class="cursor-interaction" data-home-action="back"><i data-lucide="chevron-left" aria-hidden="true"></i><span id="vc-back-label">返回客户列表</span></button></div>
+    <header class="vm-head">
+      <div class="vm-top"><div class="vm-brand"><span class="vm-logo"><i data-lucide="waypoints" aria-hidden="true"></i></span>VisitMate</div><span class="vm-demo">界面预览</span></div>
+      <div class="vm-crumb">客户 / 客户详情</div>
+      <h1 data-customer-name>宁德时代</h1>
+      <div class="vm-tags"><span>合作客户</span><span>客户与业务方向</span></div>
+      <div class="vm-contact"><span id="vm-contact-label">联系人待录入</span><button class="vm-customer-switch cursor-interaction" type="button" data-home-action="list"><i data-lucide="users" aria-hidden="true"></i><span>切换客户</span></button></div>
+    </header>
+    <nav class="vm-tabs" role="tablist" aria-label="客户模块">
+      <button type="button" role="tab" id="vm-info-tab" aria-controls="vm-info" aria-selected="false" data-page="info" class="cursor-interaction">客户信息</button>
+      <button type="button" role="tab" id="vm-op-tab" aria-controls="vm-op" aria-selected="true" data-page="op" class="cursor-interaction">合作机会<span class="vm-count">2</span></button>
+    </nav>
+    <main class="vm-content">
+      <section id="vm-op" role="tabpanel" aria-labelledby="vm-op-tab">
+        <div class="vm-section-heading"><h2>合作机会方向</h2><span class="vm-caption">按业务方向记录</span></div>
+        <div class="vm-opportunities">
+          <button type="button" class="vm-opportunity cursor-interaction" data-op="cell" aria-pressed="true"><div class="vm-op-meta"><i data-lucide="layers" aria-hidden="true"></i><span>进展待补充</span></div><strong>灌封胶 Cell</strong><small>电芯灌封应用</small></button>
+          <button type="button" class="vm-opportunity cursor-interaction" data-op="cover" aria-pressed="false"><div class="vm-op-meta"><i data-lucide="battery" aria-hidden="true"></i><span>进展待补充</span></div><strong>Battery Cover</strong><small>电池上盖</small></button>
+        </div>
+        <div class="vm-section-heading"><h2>联系人</h2><span class="vm-caption">按客户与业务方向记录</span></div>
+        <div class="vm-contact-form"><input id="contact-name" type="text" maxlength="80" placeholder="联系人姓名" aria-label="联系人姓名"><input id="contact-role" type="text" maxlength="150" placeholder="部门 / 职务" aria-label="部门或职务"><button type="button" class="vm-copy cursor-interaction" id="contact-add">添加联系人</button></div>
+        <label class="vm-copy cursor-interaction vm-upload" for="contact-image"><i data-lucide="scan-text" aria-hidden="true"></i>拍照 / 选择名片，识别联系人</label><input id="contact-image" type="file" accept="image/jpeg,image/png,image/webp,image/bmp" hidden>
+        <div id="contact-import" class="vm-import" hidden>
+          <div class="vm-row"><h2>识别联系人</h2><button id="contact-import-close" class="vm-copy cursor-interaction" type="button">关闭</button></div>
+          <p class="vm-capture-note">归档到 <span id="contact-import-scope"></span>。核对后再保存，不会自动覆盖已有联系人。</p>
+          <img id="contact-image-preview" class="vm-image-preview" alt="待识别的联系人名片" hidden>
+          <div class="vm-capture-row"><button id="contact-ocr" type="button" class="vm-copy cursor-interaction">开始识别名片</button><button id="contact-ocr-cancel" type="button" class="vm-copy cursor-interaction" hidden>取消识别</button></div>
+          <div id="contact-import-status" class="vm-status" role="status" aria-live="polite"></div>
+          <details><summary class="cursor-interaction">查看 / 修改原始文字</summary><label for="contact-raw">名片文字</label><textarea id="contact-raw" maxlength="12000" placeholder="也可以粘贴名片文字，再提取字段"></textarea><button id="contact-parse" class="vm-copy cursor-interaction" type="button">重新提取联系人字段</button></details>
+          <div class="vm-import-fields">
+            <div><label for="import-name">姓名 *</label><input id="import-name" maxlength="80" autocomplete="off"></div>
+            <div><label for="import-role">部门 / 职务</label><input id="import-role" maxlength="150" autocomplete="off"></div>
+            <div><label for="import-phone">手机 / 电话</label><input id="import-phone" type="tel" maxlength="80" autocomplete="off"></div>
+            <div class="vm-import-wide"><label for="import-email">邮箱</label><input id="import-email" type="email" maxlength="150" autocomplete="off"></div>
+            <div class="vm-import-wide"><label for="import-company">公司</label><input id="import-company" maxlength="200" autocomplete="off"></div>
+            <div class="vm-import-wide"><label for="import-address">地址</label><input id="import-address" maxlength="300" autocomplete="off"></div>
+          </div>
+          <button id="contact-import-save" class="vm-primary cursor-interaction" type="button">核对并保存联系人</button>
+        </div>
+        <div id="contact-list" class="vm-contact-list" aria-live="polite"></div>
+        <div class="vm-section-heading"><h2>拜访 Report</h2><span class="vm-caption" data-slot="op-label">灌封胶 Cell</span></div>
+        <div class="vc-empty" id="vc-no-record"><span class="vc-empty-label" data-customer-name>宁德时代</span><h3>暂无 Report</h3><p>记录本次沟通纪要、Action 与 Follow-up。</p></div>
+        <article class="vm-box" id="vc-record" hidden>
+          <div class="vm-row"><span class="vm-date" data-slot="record-date"></span><span class="vm-pill">预览记录</span></div>
+          <h3 data-slot="title"></h3>
+          <div class="vm-subtitle"><i data-lucide="notebook-pen" aria-hidden="true"></i>拜访纪要</div>
+          <p data-slot="minutes"></p>
+          <div class="vm-subtitle"><i data-lucide="list-checks" aria-hidden="true"></i>Action</div>
+          <div class="vm-task"><p data-slot="action"></p></div>
+          <div class="vm-subtitle"><i data-lucide="messages-square" aria-hidden="true"></i>Follow-up</div>
+          <div class="vm-follow"><span data-slot="follow"></span></div>
+        </article>
+        <div id="vc-history"></div>
+        <button class="vm-primary cursor-interaction" type="button" data-action="add"><i data-lucide="plus" aria-hidden="true"></i>新增拜访 Report</button>
+        <div class="vm-box vm-form" id="vm-draft" hidden><h2>新增拜访 Report</h2><label for="vm-minutes">沟通纪要</label><textarea id="vm-minutes" maxlength="12000" placeholder="记录客户需求、沟通要点和结论…"></textarea><div class="vm-capture-row"><label class="vm-copy cursor-interaction vm-upload" for="report-image"><i data-lucide="image-up" aria-hidden="true"></i>图片识别转文字</label><input id="report-image" type="file" accept="image/jpeg,image/png,image/webp,image/bmp" hidden><label class="vm-copy cursor-interaction vm-upload" for="contact-image">名片图片转联系人</label></div><div class="vm-voice"><h3>语音转写</h3><label for="voice-language">识别语言</label><select id="voice-language" aria-label="语音识别语言"><option value="zh-CN">普通话</option><option value="en-US">English</option></select><button type="button" id="voice-input" aria-pressed="false" class="vm-primary cursor-interaction">开始语音录入</button><div id="voice-status" class="vm-status" role="status" aria-live="polite">点击语音录入开始，停止后可核对文字</div><div id="voice-interim" class="vm-interim" aria-live="polite"></div><label for="voice-transcript">语音转写草稿 · 可修改</label><textarea id="voice-transcript" maxlength="12000" placeholder="已确认的转写文字显示在这里，不会覆盖原纪要"></textarea><label for="voice-target">写入位置</label><select id="voice-target"><option value="vm-minutes">沟通纪要</option><option value="vc-action">Action</option><option value="vc-follow">Follow-up</option></select><button id="voice-apply" class="vm-copy cursor-interaction" type="button">核对并写入</button></div><p class="vm-capture-note">语音需浏览器支持、联网并允许麦克风；部分浏览器会通过其在线服务转写。图片在浏览器中识别，首次需下载模型。</p><img id="report-image-preview" alt="待识别的报告图片" hidden class="vm-image-preview"><button type="button" class="vm-copy cursor-interaction" id="image-ocr" hidden>识别图片文字</button><button id="report-ocr-cancel" type="button" class="vm-copy cursor-interaction" hidden>取消图片识别</button><div class="vm-status" id="capture-status" aria-live="polite"></div><label for="vc-action">Action</label><textarea id="vc-action" maxlength="3000" placeholder="待办事项、负责人和截止日期…"></textarea><label for="vc-follow">Follow-up</label><textarea id="vc-follow" maxlength="3000" placeholder="客户反馈及下次跟进安排…"></textarea><button type="button" class="vm-copy cursor-interaction" data-action="save">保存 Report</button></div>
+      </section>
+      <section id="vm-info" role="tabpanel" aria-labelledby="vm-info-tab" hidden>
+        <div class="vm-section-heading"><h2>企业公开信息</h2><span class="vm-caption">客户资料</span></div>
+        <div class="vm-box"><div class="vi-eyebrow">公开资料</div><h2 id="vi-company-type"></h2><p id="vi-company-fact"></p><a id="vi-company-source" class="vi-source-link cursor-interaction" target="_blank" rel="noopener noreferrer"></a></div>
+        <div id="vi-company-data" class="vi-company-data" hidden></div>
+        <details class="vi-disclosure"><summary class="cursor-interaction">工商登记资料 · 待核验</summary>
+        <div class="vm-box">
+          <div class="vm-capital"><div><small>注册资本</small><strong>待核验</strong></div><div><small>实缴资本</small><strong>待核验</strong></div></div>
+          <dl><dt>客户名称</dt><dd data-customer-name>宁德时代</dd><dt>合作关系</dt><dd><span class="vm-pill">已合作</span></dd><dt>工商主体全称</dt><dd>待确认具体合作主体</dd><dt>统一社会信用代码</dt><dd>待核验</dd><dt>法定代表人</dt><dd>待核验</dd><dt>成立日期</dt><dd>待核验</dd><dt>登记状态</dt><dd>待核验</dd><dt>企业类型</dt><dd>待核验</dd><dt>注册地址</dt><dd>待核验</dd><dt>经营范围</dt><dd>待核验</dd><dt>登记机关</dt><dd>待核验</dd><dt>营业期限</dt><dd>待核验</dd></dl>
+          <div class="vm-source">客户名单与合作关系：内部提供<br>工商信息来源及核验时间：待补充</div>
+        </div>
+        </details>
+        
+      </section>
+      <div class="vm-status" aria-live="polite" id="vm-status"></div>
+      <p class="vm-footer-note">客户公开资料仅供参考<br>拜访记录与联系人按业务方向归档</p>
+    </main>
+    <footer class="vm-bottom"><span><i data-lucide="calendar-days" aria-hidden="true"></i>拜访</span><span class="vm-current"><i data-lucide="building-2" aria-hidden="true"></i>客户</span><span><i data-lucide="circle-user-round" aria-hidden="true"></i>我的</span></footer>
+    </div>
+  </div>
+  <script>
+    (()=>{
+      const root=document.getElementById('visitmate-no-location');
+      const phone=root.querySelector('.vm-phone');
+      const status=root.querySelector('#vm-status');
+      const clients={catl:'宁德时代',byd:'比亚迪',nio:'蔚来汽车',sunwoda:'欣旺达',eve:'亿纬锂能',gotion:'国轩高科',calb:'中创新航',xpeng:'小鹏',li:'理想',xiaomi:'小米'};
+      const opportunities={cell:'灌封胶 Cell',cover:'Battery Cover · 电池上盖'};
+      const profiles={"catl":{"type":"动力电池与电池系统企业","fact":"官网公开介绍 CTP 高集成成组与麒麟电池，体现电芯、热管理与电池包结构协同的技术路线。","source":"https://www.catl.com/research/technology/","sourceLabel":"宁德时代官网 · 前沿技术","list":"CTP 高集成 · 先核实 Cell 介入位置"},"byd":{"type":"整车与电池业务企业","fact":"比亚迪官方海豹资料介绍刀片电池及 CTB（电池车身一体化）技术，将电池与车身结构结合。该线索不能代表所有车型。","source":"https://media.byd.com/byd-seal-arrives-in-europe-setting-the-standard-in-breakthrough-technology-and-stunning-design/?lang=eng","sourceLabel":"比亚迪官方 · 海豹 CTB 技术介绍（2023）","list":"刀片 / CTB · 上盖需系统评审"},"nio":{"type":"智能电动汽车与补能体系企业","fact":"NIO Power 官方资料展示充电与换电体系。换电是本次判断电池包维护和耐久设计边界的重要公开线索。","source":"https://www.nio.com/nio-power","sourceLabel":"蔚来官方 · NIO Power","list":"换电体系 · 上盖耐久与可维护性"},"sunwoda":{"type":"消费、动力及储能电池业务企业","fact":"欣旺达官网动力电池栏目介绍闪充电池技术，并列出动力业务相关主体。本次机会限定为动力电池方向。","source":"https://www.sunwoda.com/power_technology","sourceLabel":"欣旺达官方 · 动力电池技术","list":"动力闪充 · 包封工艺与包型核实"},"eve":{"type":"电池与电池系统企业","fact":"亿纬锂能官网列有大圆柱动力电池产品，并同时提供模组与电池系统相关产品线。","source":"https://www.evebattery.com/ev-cylindrical-cell","sourceLabel":"亿纬锂能官方 · 大圆柱电池","list":"大圆柱 · 建议先验证 Cell 包封"},"gotion":{"type":"动力电池与储能业务企业","fact":"国轩高科在 2024 年官方发布中介绍了 4695 星晨电池和 G 刻超充电池；这是历史技术线索，当前项目状态需核实。","source":"https://www.gotion.com.cn/newsInfo/144","sourceLabel":"国轩高科官方 · 电池新品发布（2024-05-18）","list":"4695 公开线索 · 核实当前项目窗口"},"calb":{"type":"动力及储能电池企业","fact":"中创新航官网展示多种动力解决方案，并介绍顶流高功率圆柱电池产品。具体目标产品和项目应另行确认。","source":"https://www.calb-tech.com/","sourceLabel":"中创新航官方 · 产品与技术展示","list":"圆柱产品线 · 先确认成组责任方"},"xpeng":{"type":"智能电动汽车企业","fact":"小鹏官方 SEPA2.0 技术资料介绍 CIB（电池车身一体化）设计，该公开平台线索不等于所有当前车型的结构。","source":"https://ir.xiaopeng.com/zh-hans/node/8191/pdf","sourceLabel":"小鹏官方 · SEPA2.0 / CIB 技术资料","list":"CIB 一体化 · 上盖接口联合评审"},"li":{"type":"智能电动汽车企业","fact":"理想官方 2024 年发布资料介绍 MEGA 的 800V 平台及与宁德时代联合开发的麒麟 5C 电池。仅作为该公开平台的线索。","source":"https://ir.lixiang.com/zh-hans/news-releases/news-release-details/li-auto-inc-hosts-2024-spring-launch-event","sourceLabel":"理想官方 · 2024 春季发布","list":"纯电 / 5C 线索 · 先核实材料决定权"},"xiaomi":{"type":"智能电动汽车业务（小米客户下）","fact":"小米官方技术发布介绍 SU7 的 CTB 一体化电池技术。此次分析限定汽车业务，具体车型、年款及采购主体待确认。","source":"https://new-ams.c.mi.com/global/post/677336","sourceLabel":"小米官方社区 · 汽车技术发布（2023）","list":"汽车 / CTB · 锁定车型和合作主体"}};
+      const saved=window.openai?.widgetState||{};
+      const restored=saved.privateContent?.schema===4?saved.privateContent:{};
+      let client=Object.hasOwn(clients,restored.client)?restored.client:'catl';
+      let current=restored.current==='cover'?'cover':'cell';
+      let page=restored.page==='op'?'op':'info';
+      let screen=['clients','home','detail','solutions','present','summary','finish'].includes(restored.screen)?restored.screen:'home';
+      let returnScreen=restored.returnScreen==='home'?'home':'clients';
+      const records={};
+      let activeRecord=0;
+      const drafts={};
+      const contacts=(()=>{try{const data=JSON.parse(localStorage.getItem('visitmate.contacts.v1')||'{}');return Object.fromEntries(Object.entries(data||{}).filter(([scope,entries])=>/^(catl|byd|nio|sunwoda|eve|gotion|calb|xpeng|li|xiaomi):(cell|cover)$/.test(scope)&&Array.isArray(entries)).map(([scope,entries])=>[scope,entries.filter(c=>c&&typeof c.name==='string').map(c=>Object.fromEntries(['name','role','phone','email','company','address','createdAt'].map(f=>[f,typeof c[f]==='string'?c[f]:''])))]));}catch{return {};}})();
+      let selectedImage=null;
+      let speechRecognition=null;
+      const key=()=>client+':'+current;
+      const persist=()=>window.openai?.setWidgetState?.({modelContent:{customer:clients[client],opportunity:opportunities[current],module:page,screen},privateContent:{schema:4,client,current,page,screen,returnScreen}})?.catch(()=>{});
+      function renderCompanyInfo(){
+        const profile=profiles[client];
+        root.querySelector('#vi-company-type').textContent=profile.type;root.querySelector('#vi-company-fact').textContent=profile.fact;
+        const source=root.querySelector('#vi-company-source');source.href=profile.source;source.textContent=profile.sourceLabel+' ↗';
+        const data=root.querySelector('#vi-company-data');
+        const sources=(links)=>'<div class="vi-data-links">'+links.map(([url,label])=>'<a class="vi-source-link cursor-interaction" target="_blank" rel="noopener noreferrer" href="'+url+'">'+label+' ↗</a>').join('')+'</div>';
+        const table=(headers,rows)=>'<div class="vi-data-table-wrap"><table class="vi-data-table"><thead><tr>'+headers.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>'+rows.map(row=>'<tr>'+row.map((x,i)=>'<td data-label="'+headers[i]+'">'+x+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';
+        const catl=client==='catl';
+        if(client!=='catl'&&client!=='byd'){data.hidden=true;data.replaceChildren();return;}
+        data.hidden=false;
+        const body=catl
+          ? '<div class="vi-data-heading"><h2>经营与市场数据</h2><small>公开口径 · 更新至 2026-10-22</small></div>'
+            +'<div class="vi-data-card"><h3>动力电池装机量与排名</h3>'+table(['统计期','宁德时代装机','变化 / 排名'],[['2024年10月','25.32 GWh','当月值；中国全行业装机同比 +51%'],['2025年10月','36.14 GWh','同比 +42.7%；中国单月排名第 1'],['2026年8月','32.54 GWh','中国份额 41.45%'],['2026年9月','35.49 GWh','环比 +9.1%；份额 40.92%（环比 -0.53 个百分点）'],['2026年10月','尚未发布','截至 10 月 22 日，月度完整数据未出']])+'<p>2025 年全球动力电池使用量份额 39.2%，连续第 9 年全球第一；中国动力电池装机份额 43.42%，排名第一。2026 年 9 月同比尚未在当前资料中核实；月度环比由相邻月份装机量计算。</p>'+sources([['https://www.catl.com/en/news/6773.html','宁德时代 2025 年报摘要'],['https://www.catl.com/en/uploads/1/file/public/202603/20260310105310_46xjbwckvn.pdf','2025 年报财务及行业数据'],['https://www.ithome.com/0/896/862.htm','中国汽车动力电池产业创新联盟 2025 年 10 月数据转载'],['https://www.ithome.com/0/812/562.htm','宁德时代 2024 年 10 月数据'],['https://disc.static.szse.cn/disc/disk03/finalpage/2026-07-25/8e6750da-b178-4be9-a74a-4b1d8fc42c58.PDF','2026 年中期报告']])+'</div>'
+            +'<div class="vi-data-card"><h3>产能与生产布局</h3><p><strong>公开产能口径：</strong>年报披露 2025 年锂离子电池销量 661 GWh（其中动力电池 541 GWh），这是销量，不等同于设计产能；不同基地名义产能与爬坡产能没有可直接相加的统一公开口径。</p><p><strong>中国布局：</strong>福建宁德为总部及核心生产基地，并在江苏、四川、广东、青海等地布局电池生产和研发项目。<br><strong>海外布局：</strong>德国图林根已有生产基地，匈牙利项目建设中；并通过授权、合作及海外服务网络扩展本地交付。</p>'+sources([['https://www.hkexnews.hk/listedco/listconews/sehk/2026/0311/2026031100770.pdf','宁德时代 2025 年报：业务、项目与基地']])+'</div>'
+            +'<div class="vi-data-card"><h3>财务数据（人民币）</h3>'+table(['期间','营业收入','归母净利润'],[['2024 年','3,620.1 亿元','507.4 亿元'],['2025 年','4,237.0 亿元（+17.0%）','722.0 亿元（+42.3%）'],['2026 年上半年','2,769.2 亿元（+54.8%）','432.8 亿元（+42.0%）']])+'<p>2026 年最新已披露财务期为上半年；三季度及全年财报尚未发布。</p>'+sources([['https://www.catl.com/en/news/6773.html','2025 年度业绩'],['https://disc.static.szse.cn/disc/disk03/finalpage/2026-07-25/8e6750da-b178-4be9-a74a-4b1d8fc42c58.PDF','2026 年中期报告']])+'</div>'
+          : '<div class="vi-data-heading"><h2>经营与市场数据</h2><small>公开口径 · 更新至 2026-10-22</small></div>'
+            +'<div class="vi-data-card"><h3>车辆产销、出口与排名</h3>'+table(['统计期','产量','销量 / 出口','同比 / 环比'],[['2024年10月','53.61 万辆','销量 50.27 万辆','销量同比 +66.5%'],['2025年10月','42.98 万辆','销量 44.17 万辆；出口 8.39 万辆','销量同比 -12.1%；环比 +11.5%'],['2026年9月','46.39 万辆','销量 46.36 万辆；出口 18.07 万辆','销量同比 +17.0%；10 月完整数据未发布'],['2026年10月','尚未发布','截至 10 月 22 日，月度完整数据未出','统计期未结束']])+'<p>2025 年 BYD 全球新能源车销量 460.2 万辆，全球排名第一，并获中国车企销量第一；纯电车型销量约 226 万辆。2026 年上半年公司披露蝉联全球新能源车销量冠军。榜单口径按新能源车（含插混）和纯电区分。2026 年 9 月值及同比来自月度产销公告汇总，月环比未核实。</p>'+sources([['https://www.hkexnews.hk/listedco/listconews/sehk/2026/0327/2026032702970_c.pdf','比亚迪 2025 年报'],['https://prod.byd.com/cn/news/2025/detail607','比亚迪官方月度销量公告（2025年9月）'],['https://prod.byd.com/cn/detail614','比亚迪官方 2025 年销量及排名'],['https://www.byd.com/cn/news','比亚迪官方新闻与公告'],['https://static.cninfo.com.cn/finalpage/2026-08-29/1225531835.PDF','比亚迪 2026 年半年度报告']])+'</div>'
+            +'<div class="vi-data-card"><h3>产能与生产布局</h3><p><strong>公开产能口径：</strong>比亚迪没有在公开年报中给出全球乘用车统一名义产能总数；车型、基地和爬坡阶段差异较大，建议拜访时按车型/工厂核实年产规划与利用率。</p><p><strong>中国布局：</strong>深圳总部及西安、长沙、常州、合肥、郑州、济南等整车与零部件生产基地。<br><strong>海外布局：</strong>泰国、巴西、乌兹别克斯坦等已建或投产基地，匈牙利、土耳其等项目推进中。具体产能以项目公告和投产进度为准。</p>'+sources([['https://www.hkexnews.hk/listedco/listconews/sehk/2026/0327/2026032702644.pdf','比亚迪 2025 年报'],['https://www.byd.com/en/news/2026/2026-03-27-byd-annual-results','全球布局及年度业绩']])+'</div>'
+            +'<div class="vi-data-card"><h3>财务数据（人民币）</h3>'+table(['期间','营业收入','归母净利润'],[['2024 年','7,771.0 亿元','402.5 亿元'],['2025 年','8,039.7 亿元（+3.5%）','326.2 亿元（-19.0%）'],['2026 年上半年','3,448.2 亿元（-7.13%）','123.3 亿元（-20.54%）']])+'<p>2026 年最新已披露财务期为上半年；三季度及全年财报尚未发布。</p>'+sources([['https://www.hkexnews.hk/listedco/listconews/sehk/2026/0327/2026032702970_c.pdf','2025 年报'],['https://static.cninfo.com.cn/finalpage/2026-08-29/1225531835.PDF','2026 年半年度报告']])+'</div>';
+        data.innerHTML=body;
+      }
+      function renderContacts(){
+        const list=root.querySelector('#contact-list');list.replaceChildren();const entries=contacts[key()]||[];
+        root.querySelector('#vm-contact-label').textContent=entries.length?entries.length+' 位业务联系人':'联系人待录入';
+        entries.forEach((contact,index)=>{const row=document.createElement('div');row.className='vm-contact-row';const info=document.createElement('span');info.textContent=contact.name+(contact.role?' · '+contact.role:'');
+          const details=document.createElement('span');details.className='vm-contact-details';details.textContent=[contact.company,contact.phone,contact.email,contact.address].filter(Boolean).join(' · ');info.appendChild(details);
+          const remove=document.createElement('button');remove.type='button';remove.className='vm-copy cursor-interaction';remove.textContent='移除';remove.setAttribute('aria-label','移除联系人 '+contact.name);remove.addEventListener('click',()=>{contacts[key()].splice(index,1);saveContacts();renderContacts();});row.append(info,remove);list.appendChild(row);});
+      }
+      function captureDraft(){stopSpeechImmediately();cancelOcr('切换页面，识别已停止');saveImportDraft();drafts[key()]=[q('#vm-minutes').value,q('#vc-action').value,q('#vc-follow').value,q('#voice-transcript').value,q('#voice-language').value,q('#voice-target').value];}
+      function restoreDraft(){const draft=drafts[key()]||['','','','','zh-CN','vm-minutes'];q('#vm-minutes').value=draft[0];q('#vc-action').value=draft[1];q('#vc-follow').value=draft[2];q('#voice-transcript').value=draft[3]||'';q('#voice-language').value=draft[4]||'zh-CN';q('#voice-target').value=draft[5]||'vm-minutes';q('#vm-draft').hidden=true;q('#voice-status').textContent='点击语音录入开始，停止后可核对文字';restoreImportDraft();}
+      function render(){
+        ['solutions','present','summary','finish'].forEach(name=>root.querySelector('#vr-'+name).hidden=screen!==name);
+        root.querySelector('#vm-clients').hidden=screen!=='clients';
+        root.querySelector('#vm-home').hidden=screen!=='home';root.querySelector('#vm-detail').hidden=screen!=='detail';
+        root.querySelectorAll('[data-customer-name]').forEach(el=>el.textContent=clients[client]);
+        root.querySelectorAll('[data-client]').forEach(button=>button.querySelector('small').textContent=profiles[button.dataset.client].list);
+        root.querySelector('#vc-back-label').textContent=returnScreen==='home'?'返回首页':'返回客户列表';
+        root.querySelectorAll('[data-page]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.page===page)));
+        root.querySelector('#vm-info').hidden=page!=='info';root.querySelector('#vm-op').hidden=page!=='op';
+        root.querySelectorAll('[data-op]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.op===current)));
+        root.querySelector('[data-slot="op-label"]').textContent=opportunities[current];
+        const visits=records[key()]||[];
+        const record=visits[activeRecord]||visits[0];
+        root.querySelector('#vc-record').hidden=!record;root.querySelector('#vc-no-record').hidden=!!record;
+        if(record){for(const [slot,value] of Object.entries({'record-date':record.date,title:opportunities[current]+' · 拜访纪要',minutes:record.minutes,action:record.action||'待补充',follow:record.follow||'待补充'})){root.querySelector('[data-slot="'+slot+'"]').textContent=value;}}
+        const history=root.querySelector('#vc-history');history.replaceChildren();
+        if(visits.length>1){visits.forEach((visit,index)=>{const button=document.createElement('button');button.type='button';button.className='vm-copy cursor-interaction';button.textContent=(index===activeRecord?'正在查看 · ':'查看记录 · ')+visit.date;button.addEventListener('click',()=>{activeRecord=index;render();});history.appendChild(button);});}
+        renderCompanyInfo();renderContacts();
+      }
+      root.querySelectorAll('[data-client]').forEach(b=>b.addEventListener('click',()=>{captureDraft();client=b.dataset.client;current='cell';page='info';screen='detail';returnScreen='clients';activeRecord=0;status.textContent='';restoreDraft();render();persist();}));
+
+      root.querySelectorAll('[data-enter]').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.enter==='info'){screen='clients';}else{page='op';screen='detail';returnScreen='home';}status.textContent='';render();persist();}));
+      function openReview(name){
+        screen=name;
+        const visits=Object.entries(records).filter(([recordKey])=>recordKey.startsWith(client+':')).flatMap(([,entries])=>entries);
+        if(name==='summary'){
+          root.querySelector('#vr-summary-input').textContent=visits.length?'已读取 '+visits.length+' 条本次预览记录；以下内容需人工核对。':'当前没有拜访记录，以下仅为布局演示草稿。';
+          if(visits.length){root.querySelector('#vr-summary-text').value=visits[0].minutes;root.querySelector('#vr-summary-action').value=visits[0].action||'待补充';root.querySelector('#vr-summary-follow').value=visits[0].follow||'待补充';}
+          else{root.querySelector('#vr-summary-text').value='【演示】本次交流拟核实目标包型、材料应用位置及选型决定权。客户真实需求与项目窗口尚未确认。';root.querySelector('#vr-summary-action').value='【演示】客户经理安排技术交流，FAE 准备材料需求表。负责人和截止日期待指定。';root.querySelector('#vr-summary-follow').value='【演示】确认实际应用场景和客户认可的测试标准，再约定下次评审。';}
+          root.querySelector('#vr-verified').checked=false;root.querySelector('#vr-summary-status').textContent='';
+        }
+        if(name==='finish'){
+          root.querySelector('#vr-finish-minutes').textContent=root.querySelector('#vr-summary-text').value;
+          root.querySelector('#vr-finish-action').textContent=root.querySelector('#vr-summary-action').value;
+          root.querySelector('#vr-finish-follow').textContent=root.querySelector('#vr-summary-follow').value;
+        }
+        render();persist();
+      }
+      root.querySelectorAll('[data-review-back]').forEach(button=>button.addEventListener('click',()=>{screen='home';render();persist();}));
+      root.querySelectorAll('[data-review-action]').forEach(button=>button.addEventListener('click',()=>{
+        const action=button.dataset.reviewAction;
+        if(['present','summary'].includes(action)){openReview(action);return;}
+        if(action==='save-summary'){root.querySelector('#vr-summary-status').textContent=root.querySelector('#vr-verified').checked?'纪要草稿已在当前预览中保留，尚未提交正式系统':'请先人工核对内容，再勾选确认';return;}
+        if(action==='confirm-finish'){root.querySelector('#vr-finish-status').textContent='已展示结束成功状态 · 未提交真实业务数据';root.querySelector('#vr-finish .vr-signoff strong').textContent='拜访已结束（预览）';}
+      }));
+      root.querySelectorAll('[data-home-action]').forEach(b=>b.addEventListener('click',()=>{
+        const action=b.dataset.homeAction;
+        if(['solutions','summary','finish'].includes(action)){openReview(action);return;}
+        if(['back','list','home'].includes(action)){captureDraft();screen=action==='back'?returnScreen:action==='list'?'clients':'home';root.querySelector('#vm-draft').hidden=true;render();persist();return;}
+        const messages={more:'VisitMate · 客户拜访助手 · 第一版预览'};
+        if(messages[action]){root.querySelector('#vh-toast').textContent=messages[action];return;}
+        const panel=root.querySelector('#vh-panel');panel.hidden=false;
+        root.querySelector('#vh-panel-title').textContent=action==='solutions'?'产品方案资料':action==='finish'?'拜访纪要':'AI 拜访纪要';
+        const visits=Object.entries(records).filter(([recordKey])=>recordKey.startsWith(client+':')).flatMap(([,entries])=>entries);
+        root.querySelector('#vh-panel-text').textContent=action==='solutions'?'灌封胶 Cell 与电池上盖的产品方案资料待上传。':visits.length?'已记录 '+visits.length+' 条本次预览纪要；AI 整理功能待接入。':'该客户暂无拜访纪要，请先进入合作机会记录本次沟通内容。';
+      }));
+      root.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>{captureDraft();page=b.dataset.page;status.textContent='';render();persist();}));
+      root.querySelectorAll('[data-op]').forEach(b=>b.addEventListener('click',()=>{captureDraft();current=b.dataset.op;activeRecord=0;restoreDraft();status.textContent='';root.querySelector('#vm-draft').hidden=true;render();persist();}));
+      const q=selector=>root.querySelector(selector);
+      const contactFields=['name','role','phone','email','company','address'];
+      let contactImage=null, reportPreviewURL='', contactPreviewURL='', ocrTask=null;
+      const importDrafts={};
+      function saveContacts(){
+        try{localStorage.setItem('visitmate.contacts.v1',JSON.stringify(contacts));return true;}catch{return false;}
+      }
+      function addContact(contact){
+        const entries=contacts[key()]||(contacts[key()]=[]);
+        const normal=s=>(s||'').replace(/[\s()+-]/g,'').toLowerCase();
+        if(entries.some(c=>(contact.phone&&c.phone&&normal(c.phone)===normal(contact.phone))||(contact.email&&c.email&&normal(c.email)===normal(contact.email))||(c.name===contact.name&&(c.company||'')===(contact.company||'')&&(c.role||'')===(contact.role||''))))return false;
+        entries.push({...contact,createdAt:new Date().toISOString()});
+        const stored=saveContacts();renderContacts();
+        status.textContent=stored?'联系人已保存到此浏览器':'联系人已加入当前预览；此环境无法持久保存';
+        return true;
+      }
+      function speechIdle(){
+        q('#voice-input').disabled=false;
+        q('#voice-input').textContent='开始 / 继续语音录入';q('#voice-input').setAttribute('aria-pressed','false');
+        q('#voice-language').disabled=false;q('#voice-transcript').readOnly=false;q('#voice-apply').disabled=false;
+      }
+      function stopSpeechImmediately(){
+        const recognition=speechRecognition;speechRecognition=null;
+        if(recognition){recognition.onresult=null;recognition.onerror=null;recognition.onend=null;try{recognition.abort();}catch{}}
+        speechIdle();q('#voice-interim').textContent='';
+      }
+      q('#voice-input').addEventListener('click',()=>{
+        const out=q('#voice-status');
+        if(speechRecognition){out.textContent='正在结束录入…';q('#voice-input').disabled=true;try{speechRecognition.stop();}catch{stopSpeechImmediately();q('#voice-input').disabled=false;}return;}
+        const Speech=window.SpeechRecognition||window.webkitSpeechRecognition;
+        if(!Speech){out.textContent='当前浏览器不支持语音识别。请在 Chrome / Edge 中打开网页，或使用手机键盘的语音输入。';return;}
+        if(!window.isSecureContext&&location.protocol!=='file:'){out.textContent='请通过 HTTPS 或本机 localhost 打开网页，再使用麦克风。';return;}
+        const recognition=new Speech();speechRecognition=recognition;
+        const scope=key(),base=q('#voice-transcript').value.trim();let failed=false,received=false;
+        recognition.lang=q('#voice-language').value;recognition.continuous=true;recognition.interimResults=true;recognition.maxAlternatives=1;
+        q('#voice-input').textContent='停止语音录入';q('#voice-input').setAttribute('aria-pressed','true');
+        q('#voice-language').disabled=true;q('#voice-transcript').readOnly=true;q('#voice-apply').disabled=true;
+        out.textContent='正在请求麦克风权限…';q('#voice-interim').textContent='';
+        recognition.onstart=()=>{if(speechRecognition===recognition)out.textContent='正在聆听，说完后点击停止';};
+        recognition.onresult=event=>{
+          if(speechRecognition!==recognition||scope!==key())return;
+          const final=[],interim=[];
+          for(let i=0;i<event.results.length;i++){const result=event.results[i];(result.isFinal?final:interim).push(result[0].transcript);}
+          received=received||final.length>0;
+          q('#voice-transcript').value=[base,final.join('')].filter(Boolean).join('\n');
+          q('#voice-interim').textContent=interim.length?'正在识别：'+interim.join(''):'';
+        };
+        recognition.onerror=event=>{
+          if(speechRecognition!==recognition)return;failed=true;
+          const messages={'not-allowed':'麦克风权限被拒绝。请在地址栏网站权限中允许麦克风后重试。','service-not-allowed':'当前浏览器或页面未获语音服务权限，请在外部浏览器中打开网页。','audio-capture':'未检测到可用麦克风，请检查设备连接。','network':'语音服务连接失败。请检查网络，已有转写文字已保留。','no-speech':'未检测到说话声，请靠近麦克风后重试。','language-not-supported':'语音服务暂不支持此语言，请切换语言后重试。','aborted':'语音录入已停止，已确认文字保留。'};
+          out.textContent=messages[event.error]||'语音识别中断，已确认文字保留，请重试。';
+        };
+        recognition.onend=()=>{if(speechRecognition!==recognition)return;speechRecognition=null;speechIdle();q('#voice-input').disabled=false;q('#voice-interim').textContent='';if(!failed)out.textContent=received?'录入结束。请核对文字，再选择写入位置。':'本次未识别到文字，可再次开始录入。';};
+        try{recognition.start();}catch{stopSpeechImmediately();q('#voice-input').disabled=false;out.textContent='无法启动语音识别，请检查麦克风权限并重试。';}
+      });
+      q('#voice-apply').addEventListener('click',()=>{
+        const text=q('#voice-transcript').value.trim(),target=q('#voice-target').value;
+        if(!text){q('#voice-status').textContent='请先录入或输入需要写入的文字';return;}
+        const field=q('#'+target),value=[field.value.trim(),text].filter(Boolean).join('\n');
+        if(value.length>field.maxLength){q('#voice-status').textContent='内容超过该字段字数上限，请精简后再写入。';return;}
+        field.value=value;q('#voice-transcript').value='';q('#voice-status').textContent='已追加到'+q('#voice-target').selectedOptions[0].textContent+'，可继续编辑。';
+      });
+      function replacePreview(id,file){
+        const contact=id==='contact-image-preview',old=contact?contactPreviewURL:reportPreviewURL;
+        if(old)URL.revokeObjectURL(old);
+        const url=file?URL.createObjectURL(file):'';
+        if(contact)contactPreviewURL=url;else reportPreviewURL=url;
+        const img=q('#'+id);if(url)img.src=url;else img.removeAttribute('src');img.hidden=!url;
+      }
+      function validImage(file,out){
+        if(!file)return false;
+        if(!/^image\/(jpeg|png|webp|bmp)$/i.test(file.type)){out.textContent='请选择 JPG、PNG、WebP 或 BMP 图片；HEIC 请先转为 JPG。';return false;}
+        if(file.size>15*1024*1024){out.textContent='图片不能超过 15 MB，请压缩后重试。';return false;}
+        return true;
+      }
+      function setOcrBusy(busy,type){
+        ['contact-ocr','image-ocr','contact-image','report-image','contact-import-save','contact-parse','contact-raw',...contactFields.map(f=>'import-'+f)].forEach(id=>q('#'+id).disabled=busy);
+        q('#contact-ocr-cancel').hidden=!busy||type!=='contact';q('#report-ocr-cancel').hidden=!busy||type!=='report';
+      }
+      function cancelOcr(message='识别已取消，可以重新选择图片'){
+        const task=ocrTask;if(!task)return;
+        ocrTask=null;clearTimeout(task.timer);if(task.worker)task.worker.terminate().catch(()=>{});
+        setOcrBusy(false);task.out.textContent=message;
+      }
+      async function recognizeImage(file,type,out,onText){
+        if(ocrTask){out.textContent='已有图片正在识别，请先取消或等待完成。';return;}
+        if(!window.Tesseract?.createWorker){out.textContent='识别组件未加载，请检查网络后刷新页面。';return;}
+        const task={scope:key(),type,out,worker:null};ocrTask=task;setOcrBusy(true,type);
+        out.textContent='正在加载中英文识别模型，首次使用需要下载…';
+        task.timer=setTimeout(()=>{if(ocrTask===task)cancelOcr('识别超时，请检查网络或换一张清晰图片后重试。');},120000);
+        try{
+          const worker=await Tesseract.createWorker('chi_sim+eng',1,{logger:message=>{if(ocrTask===task&&message.status==='recognizing text')out.textContent='识别中 '+Math.round(message.progress*100)+'%';}});
+          if(ocrTask!==task){await worker.terminate();return;}task.worker=worker;
+          const result=await worker.recognize(file);
+          if(ocrTask!==task||task.scope!==key())return;
+          const text=(result.data.text||'').trim();
+          if(!text){out.textContent='未识别到文字，请使用正面、清晰、无反光的图片。';return;}
+          onText(text,result.data.confidence);
+        }catch{if(ocrTask===task)out.textContent='识别失败，请检查网络和图片清晰度后重试；也可粘贴文字手动提取。';}
+        finally{clearTimeout(task.timer);if(ocrTask===task){ocrTask=null;setOcrBusy(false);if(task.worker)await task.worker.terminate().catch(()=>{});}}
+      }
+      function parseContact(text){
+        const lines=text.replace(/\r/g,'').split('\n').map(s=>s.trim().replace(/([\u4e00-\u9fff])[\t ]+(?=[\u4e00-\u9fff\d])/g,'$1').replace(/(\d)[\t ]+(?=[\u4e00-\u9fff])/g,'$1')).filter(Boolean);
+        const email=text.match(/[A-Z0-9._%+-]+\s*@\s*[A-Z0-9.-]+\.[A-Z]{2,}/i)?.[0].replace(/\s/g,'')||'';
+        const phoneLine=lines.find(s=>/(手机|电话|移动|Mobile|Tel|Phone|Cell)/i.test(s)&&/\d{3}/.test(s))||'';
+        const phoneMatch=(phoneLine||text).match(/(?:\+?86[-\s]?)?1[3-9](?:[-\s]?\d){9}\b|\+\d[\d\s().-]{7,}\d|\b0\d{2,3}[-\s]?\d{7,8}\b/);
+        const phone=phoneMatch?phoneMatch[0].replace(/\s+/g,' ').trim():'';
+        const labeled=(pattern)=>{const line=lines.find(s=>pattern.test(s));return line?line.replace(pattern,'').trim():'';};
+        const company=labeled(/^(?:公司|企业|单位|Company)\s*[:：]\s*/i)||lines.find(s=>/(有限公司|股份公司|集团|Huntsman|Corporation|Co\.,?\s*Ltd|\bInc\b|\bLimited\b)/i.test(s)&&!s.includes('@'))||lines.find(s=>s===clients[client])||'';
+        const role=labeled(/^(?:职务|职位|部门|Title|Position|Department)\s*[:：]\s*/i)||lines.find(s=>/(经理|工程师|总监|主管|总裁|专员|总经理|销售|采购|Manager|Engineer|Director|President|Sales)/i.test(s)&&s!==company&&!s.includes('@'))||'';
+        const address=labeled(/^(?:地址|Address|Addr)\s*[:：]\s*/i)||lines.find(s=>/(省.+市|市.+[路区街]|[路街道].*\d+号)/.test(s)&&s!==company)||'';
+        const labeledName=labeled(/^(?:姓名|联系人|Name|Contact)\s*[:：]\s*/i);
+        const name=labeledName||lines.find(s=>s!==company&&s!==role&&s!==address&&!/[@\d:：]/.test(s)&&(/^[\u4e00-\u9fff·]{2,4}$/.test(s)||/^[A-Za-z]+(?:[ .'-]+[A-Za-z]+){1,3}$/.test(s)))||'';
+        return {name,role,phone,email,company,address};
+      }
+      function fillContact(contact){contactFields.forEach(field=>q('#import-'+field).value=contact[field]||'');}
+      function saveImportDraft(){importDrafts[key()]={file:contactImage,raw:q('#contact-raw').value,fields:Object.fromEntries(contactFields.map(f=>[f,q('#import-'+f).value])),open:!q('#contact-import').hidden};}
+      function restoreImportDraft(){
+        const draft=importDrafts[key()];contactImage=draft?.file||null;fillContact(draft?.fields||{});q('#contact-raw').value=draft?.raw||'';
+        q('#contact-image').value='';replacePreview('contact-image-preview',contactImage);q('#contact-import').hidden=!draft?.open;
+        q('#contact-import-scope').textContent=clients[client]+' · '+opportunities[current];q('#contact-import-status').textContent='';
+        selectedImage=null;q('#report-image').value='';replacePreview('report-image-preview',null);q('#image-ocr').hidden=true;q('#capture-status').textContent='';
+      }
+      function runContactOcr(){if(!contactImage)return;recognizeImage(contactImage,'contact',q('#contact-import-status'),(text,confidence)=>{q('#contact-raw').value=text;fillContact(parseContact(text));q('#contact-import-status').textContent=(confidence<65?'图片识别把握较低。':'识别完成。')+'请核对姓名、电话和邮箱后保存；未确定的字段请手动补充。';q('#contact-ocr').textContent='重新识别名片';});}
+      q('#contact-image').addEventListener('change',event=>{
+        const file=event.target.files?.[0],out=q('#contact-import-status');q('#contact-import').hidden=false;q('#contact-import-scope').textContent=clients[client]+' · '+opportunities[current];
+        if(!validImage(file,out)){contactImage=null;replacePreview('contact-image-preview',null);return;}
+        contactImage=file;q('#contact-raw').value='';fillContact({});replacePreview('contact-image-preview',file);
+        q('#contact-import').scrollIntoView({behavior:'smooth',block:'start'});runContactOcr();
+      });
+      q('#contact-ocr').addEventListener('click',runContactOcr);
+      q('#contact-ocr-cancel').addEventListener('click',()=>cancelOcr());q('#report-ocr-cancel').addEventListener('click',()=>cancelOcr());
+      q('#contact-import-close').addEventListener('click',()=>{if(ocrTask?.type==='contact')cancelOcr();q('#contact-import').hidden=true;});
+      q('#contact-parse').addEventListener('click',()=>{const text=q('#contact-raw').value.trim();if(!text){q('#contact-import-status').textContent='请先粘贴或识别名片文字';return;}fillContact(parseContact(text));q('#contact-import-status').textContent='已提取字段，请核对后保存。';});
+      q('#contact-import-save').addEventListener('click',()=>{
+        const contact=Object.fromEntries(contactFields.map(field=>[field,q('#import-'+field).value.trim()])),out=q('#contact-import-status');
+        if(!contact.name){out.textContent='请填写或核对联系人姓名';q('#import-name').focus();return;}
+        if(contact.email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact.email)){out.textContent='邮箱格式有误，请核对识别结果。';q('#import-email').focus();return;}
+        if(contact.phone&&(contact.phone.replace(/\D/g,'').length<7||contact.phone.replace(/\D/g,'').length>18)){out.textContent='电话号码格式有误，请核对识别结果。';q('#import-phone').focus();return;}
+        if(!addContact(contact)){out.textContent='当前业务模块已有相同姓名/职务、电话或邮箱的联系人，请勿重复添加。';return;}
+        delete importDrafts[key()];contactImage=null;fillContact({});q('#contact-raw').value='';replacePreview('contact-image-preview',null);q('#contact-image').value='';q('#contact-import').hidden=true;
+      });
+      q('#report-image').addEventListener('change',event=>{const file=event.target.files?.[0];if(!validImage(file,q('#capture-status'))){selectedImage=null;replacePreview('report-image-preview',null);q('#image-ocr').hidden=true;return;}selectedImage=file;replacePreview('report-image-preview',file);q('#image-ocr').hidden=false;q('#capture-status').textContent='图片已载入，点击识别文字。';});
+      q('#image-ocr').addEventListener('click',()=>{
+        if(!selectedImage)return;
+        recognizeImage(selectedImage,'report',q('#capture-status'),text=>{
+          const field=q('#vm-minutes'),value=[field.value.trim(),text].filter(Boolean).join('\n');
+          if(value.length>field.maxLength){q('#capture-status').textContent='识别文字超过纪要字数上限，请精简已有纪要再识别。';return;}
+          field.value=value;q('#capture-status').textContent='图片文字已追加到纪要，请核对后保存。';
+        });
+      });
+      window.addEventListener('pagehide',()=>{stopSpeechImmediately();cancelOcr();if(contactPreviewURL)URL.revokeObjectURL(contactPreviewURL);if(reportPreviewURL)URL.revokeObjectURL(reportPreviewURL);});
+
+      root.querySelector('#contact-add').addEventListener('click',()=>{const name=q('#contact-name').value.trim();if(!name){status.textContent='请填写联系人姓名';return;}if(!addContact({name,role:q('#contact-role').value.trim()})){status.textContent='该联系人已存在，请勿重复添加';return;}q('#contact-name').value='';q('#contact-role').value='';});
+      root.querySelector('[data-action="add"]').addEventListener('click',()=>{const draft=root.querySelector('#vm-draft');if(!draft.hidden)captureDraft();draft.hidden=!draft.hidden;if(!draft.hidden)root.querySelector('#vm-minutes').focus();});
+      root.querySelector('[data-action="save"]').addEventListener('click',()=>{
+        if(ocrTask){status.textContent='图片正在识别，请等待完成或取消识别后再保存 Report';return;}
+        if(speechRecognition||q('#voice-transcript').value.trim()){status.textContent='请先停止语音录入，并将转写草稿核对写入后再保存 Report';return;}
+        const minutes=root.querySelector('#vm-minutes').value.trim();if(!minutes){status.textContent='请先填写拜访纪要';return;}
+        const record={minutes,action:root.querySelector('#vc-action').value.trim(),follow:root.querySelector('#vc-follow').value.trim(),date:new Date().toLocaleString('zh-CN',{timeZone:'Asia/Shanghai',hour12:false})};
+        if(!records[key()])records[key()]=[];records[key()].unshift(record);activeRecord=0;saveImportDraft();delete drafts[key()];restoreDraft();render();status.textContent='已保存到该客户的本次预览，刷新后不保留';
+      });
+      window.addEventListener('openai:set_globals',e=>{const state=e.detail?.globals?.widgetState?.privateContent;if(state?.schema!==4)return;captureDraft();if(Object.hasOwn(clients,state.client))client=state.client;if(['cell','cover'].includes(state.current))current=state.current;if(['info','op'].includes(state.page))page=state.page;if(['home','detail','clients','solutions','present','summary','finish'].includes(state.screen))screen=state.screen;if(['home','clients'].includes(state.returnScreen))returnScreen=state.returnScreen;restoreDraft();render();});
+      restoreImportDraft();
+      render();
+      if(globalThis.Tweak){const design={radius:18};const tweak=new Tweak({container:phone,onChange:()=>phone.style.setProperty('--vm-round',design.radius+'px')});tweak.addSlider(design,'radius',{label:'卡片圆角',min:6,max:24,step:2,unit:'px'});}
+    })();
+  </script>
+</div>
+<script>document.addEventListener("DOMContentLoaded",function(){if(window.lucide)window.lucide.createIcons({attrs:{width:16,height:16}});});</script></body></html>
