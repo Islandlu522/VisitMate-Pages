@@ -156,7 +156,7 @@
     #visitmate-no-location .vm-task p{font-size:13px}
     @media(max-width:370px){#visitmate-no-location .vc-list{padding:0 15px 16px}}
   </style>
-  <link rel="stylesheet" href="assets/customer-intelligence.css?v=20261026-clean-statusbar">
+  <link rel="stylesheet" href="assets/customer-intelligence.css?v=20261026-contact-ocr-v2">
   <style>
     #visitmate-no-location .vi-context{border-radius:12px;background:var(--vm-tint);color:var(--vm-accent);padding:12px 13px;margin:0 0 10px;font-size:12px}
     #visitmate-no-location .vi-context strong{font-weight:500;display:block;margin-bottom:3px}
@@ -359,7 +359,7 @@
         <label class="vm-copy cursor-interaction vm-upload" for="contact-image"><i data-lucide="scan-text" aria-hidden="true"></i>拍照 / 选择名片，识别联系人</label><input id="contact-image" type="file" accept="image/jpeg,image/png,image/webp,image/bmp" hidden>
         <div id="contact-import" class="vm-import" hidden>
           <div class="vm-row"><h2>识别联系人</h2><button id="contact-import-close" class="vm-copy cursor-interaction" type="button">关闭</button></div>
-          <p class="vm-capture-note">归档到 <span id="contact-import-scope"></span>。核对后再保存，不会自动覆盖已有联系人。</p>
+          <p class="vm-capture-note">归档到 <span id="contact-import-scope"></span>。拍摄时让名片铺平、正对镜头并占画面大部分，避免反光；识别结果请核对后再保存，不会自动覆盖已有联系人。</p>
           <img id="contact-image-preview" class="vm-image-preview" alt="待识别的联系人名片" hidden>
           <div class="vm-capture-row"><button id="contact-ocr" type="button" class="vm-copy cursor-interaction">开始识别名片</button><button id="contact-ocr-cancel" type="button" class="vm-copy cursor-interaction" hidden>取消识别</button></div>
           <div id="contact-import-status" class="vm-status" role="status" aria-live="polite"></div>
@@ -403,8 +403,8 @@
     <footer class="vm-bottom"><span><i data-lucide="calendar-days" aria-hidden="true"></i>拜访</span><span class="vm-current"><i data-lucide="building-2" aria-hidden="true"></i>客户</span><span><i data-lucide="circle-user-round" aria-hidden="true"></i>我的</span></footer>
     </div>
   </div>
-  <script src="assets/customer-intelligence.js?v=20261026-clean-statusbar"></script>
-  <script src="assets/capacity-globe.js?v=20261026-clean-statusbar"></script>
+  <script src="assets/customer-intelligence.js?v=20261026-contact-ocr-v2"></script>
+  <script src="assets/capacity-globe.js?v=20261026-contact-ocr-v2"></script>
   <script>
     (()=>{
       const root=document.getElementById('visitmate-no-location');
@@ -594,34 +594,61 @@
         ocrTask=null;clearTimeout(task.timer);if(task.worker)task.worker.terminate().catch(()=>{});
         setOcrBusy(false);task.out.textContent=message;
       }
+      async function prepareOcrVariants(file){
+        let bitmap;
+        if(window.createImageBitmap){try{bitmap=await createImageBitmap(file,{imageOrientation:'from-image'});}catch{bitmap=await createImageBitmap(file);}}
+        else{bitmap=await new Promise((resolve,reject)=>{const image=new Image(),url=URL.createObjectURL(file);image.onload=()=>{URL.revokeObjectURL(url);resolve(image);};image.onerror=()=>{URL.revokeObjectURL(url);reject(new Error('无法读取图片'));};image.src=url;});}
+        const longest=Math.max(bitmap.width,bitmap.height),scale=Math.min(3,2000/longest),width=Math.max(1,Math.round(bitmap.width*scale)),height=Math.max(1,Math.round(bitmap.height*scale));
+        const grayCanvas=document.createElement('canvas');grayCanvas.width=width;grayCanvas.height=height;const grayCtx=grayCanvas.getContext('2d',{willReadFrequently:true});grayCtx.imageSmoothingEnabled=true;grayCtx.imageSmoothingQuality='high';grayCtx.drawImage(bitmap,0,0,width,height);
+        if(bitmap.close)bitmap.close();
+        const pixels=grayCtx.getImageData(0,0,width,height),data=pixels.data,histogram=new Uint32Array(256);let sum=0;
+        for(let i=0;i<data.length;i+=4){const gray=Math.round(data[i]*.299+data[i+1]*.587+data[i+2]*.114),enhanced=Math.max(0,Math.min(255,Math.round((gray-128)*1.35+128)));data[i]=data[i+1]=data[i+2]=enhanced;histogram[enhanced]++;sum+=enhanced;}
+        grayCtx.putImageData(pixels,0,0);
+        const total=width*height;let backgroundWeight=0,backgroundSum=0,bestVariance=-1,threshold=150;
+        for(let t=0;t<256;t++){backgroundWeight+=histogram[t];if(!backgroundWeight)continue;const foregroundWeight=total-backgroundWeight;if(!foregroundWeight)break;backgroundSum+=t*histogram[t];const meanBackground=backgroundSum/backgroundWeight,meanForeground=(sum-backgroundSum)/foregroundWeight,variance=backgroundWeight*foregroundWeight*(meanBackground-meanForeground)**2;if(variance>bestVariance){bestVariance=variance;threshold=t;}}
+        const binaryCanvas=document.createElement('canvas');binaryCanvas.width=width;binaryCanvas.height=height;const binaryCtx=binaryCanvas.getContext('2d');const binary=binaryCtx.createImageData(width,height);
+        for(let i=0;i<data.length;i+=4){const value=data[i]>threshold?255:0;binary.data[i]=binary.data[i+1]=binary.data[i+2]=value;binary.data[i+3]=255;}
+        binaryCtx.putImageData(binary,0,0);
+        return [{image:grayCanvas,label:'清晰增强图',psm:Tesseract.PSM.AUTO},{image:file,label:'原图',psm:Tesseract.PSM.AUTO},{image:binaryCanvas,label:'黑白增强图',psm:Tesseract.PSM.SPARSE_TEXT}];
+      }
+      function ocrQuality(text,confidence){const contact=parseContact(text),fields=['name','phone','email','company','role','address'].filter(field=>contact[field]).length;return Number(confidence||0)*.65+fields*5+(contact.name?8:0)+(contact.phone?12:0)+(contact.email?12:0)+Math.min(8,(text||'').length/90);}
       async function recognizeImage(file,type,out,onText){
         if(ocrTask){out.textContent='已有图片正在识别，请先取消或等待完成。';return;}
         if(!window.Tesseract?.createWorker){out.textContent='识别组件未加载，请检查网络后刷新页面。';return;}
         const task={scope:key(),type,out,worker:null};ocrTask=task;setOcrBusy(true,type);
-        out.textContent='正在加载中英文识别模型，首次使用需要下载…';
-        task.timer=setTimeout(()=>{if(ocrTask===task)cancelOcr('识别超时，请检查网络或换一张清晰图片后重试。');},120000);
+        out.textContent='正在增强名片清晰度并准备中英文识别模型，首次使用需要下载…';
+        task.timer=setTimeout(()=>{if(ocrTask===task)cancelOcr('识别超时，请检查网络或换一张清晰图片后重试。');},180000);
         try{
-          const worker=await Tesseract.createWorker('chi_sim+eng',1,{logger:message=>{if(ocrTask===task&&message.status==='recognizing text')out.textContent='识别中 '+Math.round(message.progress*100)+'%';}});
+          const worker=await Tesseract.createWorker('chi_sim+eng',1,{logger:message=>{if(ocrTask!==task)return;if(message.status==='recognizing text')out.textContent='正在识别名片文字 '+Math.round(message.progress*100)+'%';else if(message.status==='loading tesseract core')out.textContent='正在加载文字识别引擎…';else if(message.status==='loading language traineddata')out.textContent='正在加载中文和英文识别模型，首次使用可能需要下载…';else if(message.status==='initializing tesseract')out.textContent='正在初始化识别引擎…';}});
           if(ocrTask!==task){await worker.terminate();return;}task.worker=worker;
-          const result=await worker.recognize(file);
+          await worker.setParameters({tessedit_pageseg_mode:Tesseract.PSM.AUTO,preserve_interword_spaces:'1'});
+          const variants=await prepareOcrVariants(file);let best=null;
+          for(let i=0;i<variants.length;i++){
+            if(ocrTask!==task)break;const variant=variants[i];
+            await worker.setParameters({tessedit_pageseg_mode:variant.psm,preserve_interword_spaces:'1'});
+            out.textContent='正在识别名片（'+(i+1)+'/'+variants.length+'）：'+variant.label+'…';
+            const result=await worker.recognize(variant.image),text=(result.data.text||'').trim(),confidence=Number(result.data.confidence)||0;
+            if(text){const score=ocrQuality(text,confidence);if(!best||score>best.score)best={text,confidence,score,label:variant.label};}
+            if(best&&best.confidence>=88&&parseContact(best.text).name&&parseContact(best.text).phone&&parseContact(best.text).email)break;
+          }
           if(ocrTask!==task||task.scope!==key())return;
-          const text=(result.data.text||'').trim();
-          if(!text){out.textContent='未识别到文字，请使用正面、清晰、无反光的图片。';return;}
-          onText(text,result.data.confidence);
+          if(!best){out.textContent='未识别到文字，请拍摄正面、清晰、无反光的名片；也可以粘贴名片文字。';return;}
+          onText(best.text,best.confidence,best.label);
         }catch{if(ocrTask===task)out.textContent='识别失败，请检查网络和图片清晰度后重试；也可粘贴文字手动提取。';}
         finally{clearTimeout(task.timer);if(ocrTask===task){ocrTask=null;setOcrBusy(false);if(task.worker)await task.worker.terminate().catch(()=>{});}}
       }
       function parseContact(text){
-        const lines=text.replace(/\r/g,'').split('\n').map(s=>s.trim().replace(/([\u4e00-\u9fff])[\t ]+(?=[\u4e00-\u9fff\d])/g,'$1').replace(/(\d)[\t ]+(?=[\u4e00-\u9fff])/g,'$1')).filter(Boolean);
-        const email=text.match(/[A-Z0-9._%+-]+\s*@\s*[A-Z0-9.-]+\.[A-Z]{2,}/i)?.[0].replace(/\s/g,'')||'';
+        const normalized=text.normalize('NFKC').replace(/[＠﹫]/g,'@').replace(/[．。]/g,'.').replace(/[－—–]/g,'-').replace(/\u00a0/g,' ');
+        const lines=normalized.replace(/\r/g,'').split('\n').map(s=>s.trim().replace(/([\u4e00-\u9fff])[\t ]+(?=[\u4e00-\u9fff\d])/g,'$1').replace(/(\d)[\t ]+(?=[\u4e00-\u9fff])/g,'$1')).filter(Boolean);
+        const email=normalized.match(/[A-Z0-9._%+-]+\s*@\s*[A-Z0-9.-]+\.[A-Z]{2,}/i)?.[0].replace(/\s/g,'')||'';
         const phoneLine=lines.find(s=>/(手机|电话|移动|Mobile|Tel|Phone|Cell)/i.test(s)&&/\d{3}/.test(s))||'';
-        const phoneMatch=(phoneLine||text).match(/(?:\+?86[-\s]?)?1[3-9](?:[-\s]?\d){9}\b|\+\d[\d\s().-]{7,}\d|\b0\d{2,3}[-\s]?\d{7,8}\b/);
+        const phoneMatch=(phoneLine+'\n'+normalized).match(/(?:\+?86[-\s]?)?1[3-9](?:[-\s]?\d){9}\b|\+\d[\d\s().-]{7,}\d|\b0\d{2,3}[-\s]?\d{7,8}\b/);
         const phone=phoneMatch?phoneMatch[0].replace(/\s+/g,' ').trim():'';
-        const labeled=(pattern)=>{const line=lines.find(s=>pattern.test(s));return line?line.replace(pattern,'').trim():'';};
-        const company=labeled(/^(?:公司|企业|单位|Company)\s*[:：]\s*/i)||lines.find(s=>/(有限公司|股份公司|集团|Huntsman|Corporation|Co\.,?\s*Ltd|\bInc\b|\bLimited\b)/i.test(s)&&!s.includes('@'))||lines.find(s=>s===clients[client])||'';
-        const role=labeled(/^(?:职务|职位|部门|Title|Position|Department)\s*[:：]\s*/i)||lines.find(s=>/(经理|工程师|总监|主管|总裁|专员|总经理|销售|采购|Manager|Engineer|Director|President|Sales)/i.test(s)&&s!==company&&!s.includes('@'))||'';
-        const address=labeled(/^(?:地址|Address|Addr)\s*[:：]\s*/i)||lines.find(s=>/(省.+市|市.+[路区街]|[路街道].*\d+号)/.test(s)&&s!==company)||'';
-        const labeledName=labeled(/^(?:姓名|联系人|Name|Contact)\s*[:：]\s*/i);
+        const labeled=labels=>{const wanted=new Set(labels.map(label=>label.toLowerCase()));for(const line of lines){const split=line.search(/[:：]/);if(split<0)continue;const label=line.slice(0,split).trim().toLowerCase();if(wanted.has(label))return line.slice(split+1).trim();}return '';};
+        const company=labeled(['公司','企业','单位','company'])||lines.find(s=>s===clients[client])||lines.find(s=>/(有限责任公司|股份有限公司|有限公司|股份公司|集团)/i.test(s)&&!s.includes('@'))||lines.find(s=>/(Huntsman|Corporation|Co\.,?\s*Ltd|\bInc\b|\bLimited\b)/i.test(s)&&!s.includes('@'))||'';
+        const role=labeled(['职务','职位','部门','title','position','department'])||lines.find(s=>/(经理|工程师|总监|主管|总裁|专员|总经理|销售|采购|Manager|Engineer|Director|President|Sales)/i.test(s)&&s!==company&&!s.includes('@'))||'';
+        const address=labeled(['地址','address','addr'])||lines.find(s=>/(省.+市|市.+[路区街]|[路街道].*\d+号)/.test(s)&&s!==company)||'';
+        const labeledName=labeled(['姓名','联系人','name','contact']);
         const name=labeledName||lines.find(s=>s!==company&&s!==role&&s!==address&&!/[@\d:：]/.test(s)&&(/^[\u4e00-\u9fff·]{2,4}$/.test(s)||/^[A-Za-z]+(?:[ .'-]+[A-Za-z]+){1,3}$/.test(s)))||'';
         return {name,role,phone,email,company,address};
       }
@@ -633,7 +660,7 @@
         q('#contact-import-scope').textContent=clients[client]+' · '+opportunities[current];q('#contact-import-status').textContent='';
         selectedImage=null;q('#report-image').value='';replacePreview('report-image-preview',null);q('#image-ocr').hidden=true;q('#capture-status').textContent='';
       }
-      function runContactOcr(){if(!contactImage)return;recognizeImage(contactImage,'contact',q('#contact-import-status'),(text,confidence)=>{q('#contact-raw').value=text;fillContact(parseContact(text));q('#contact-import-status').textContent=(confidence<65?'图片识别把握较低。':'识别完成。')+'请核对姓名、电话和邮箱后保存；未确定的字段请手动补充。';q('#contact-ocr').textContent='重新识别名片';});}
+      function runContactOcr(){if(!contactImage)return;recognizeImage(contactImage,'contact',q('#contact-import-status'),(text,confidence,variant)=>{q('#contact-raw').value=text;const fields=parseContact(text);fillContact(fields);const percent=Math.round(confidence);const missing=['name','phone','email'].filter(field=>!fields[field]);const low=confidence<70||missing.length>=2;q('#contact-import-status').textContent=(low?'识别把握较低（约 '+percent+'%）。':'识别完成（约 '+percent+'%）。')+'请核对姓名、电话和邮箱。'+(missing.length?'尚未识别：'+missing.map(field=>({name:'姓名',phone:'电话',email:'邮箱'}[field])).join('、')+'。':'')+'识别文字来自'+(variant||'图片')+'。';q('#contact-ocr').textContent='重新识别名片';});}
       q('#contact-image').addEventListener('change',event=>{
         const file=event.target.files?.[0],out=q('#contact-import-status');q('#contact-import').hidden=false;q('#contact-import-scope').textContent=clients[client]+' · '+opportunities[current];
         if(!validImage(file,out)){contactImage=null;replacePreview('contact-image-preview',null);return;}
