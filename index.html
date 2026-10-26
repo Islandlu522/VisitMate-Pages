@@ -102,11 +102,11 @@
   </style>
 <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js"></script>
   <style>
-    #visitmate-no-location .vm-home{background:var(--vm-panel);padding:12px 20px 20px;border-radius:30px}
+    #visitmate-no-location .vm-home{background:var(--vm-panel);padding:0 20px 20px;border-radius:30px}
     #visitmate-no-location .vh-statusbar{display:flex;align-items:center;justify-content:space-between;padding:15px 7px 8px;font-size:12px;font-weight:600}
     #visitmate-no-location .vh-statusbar div{display:flex;gap:5px;align-items:center}
-    #visitmate-no-location .vh-titlebar{position:relative;display:flex;align-items:center;justify-content:flex-end;min-height:55px;border-bottom:1px solid var(--vm-line)}
-    #visitmate-no-location .vh-titlebar h1{position:absolute;left:50%;transform:translateX(-50%);font-size:20px;text-align:center;margin:0;font-weight:600;letter-spacing:0}
+    #visitmate-no-location .vh-titlebar{display:grid;grid-template-columns:40px 1fr 40px;align-items:center;min-height:55px;border-bottom:1px solid var(--vm-line)}
+    #visitmate-no-location .vh-titlebar h1{font-size:20px;text-align:center;margin:0;font-weight:600;letter-spacing:0}
     #visitmate-no-location .vh-titlebar button{display:grid;place-items:center;min-height:44px;padding:0}
     #visitmate-no-location .vh-titlebar svg{width:21px;height:21px}
     #visitmate-no-location .vh-customer{display:flex;gap:12px;align-items:center;padding-bottom:16px}
@@ -158,6 +158,7 @@
     #visitmate-no-location .vm-task p{font-size:13px}
     @media(max-width:370px){#visitmate-no-location .vc-list{padding:0 15px 16px}}
   </style>
+  <link rel="stylesheet" href="assets/customer-intelligence.css">
   <style>
     #visitmate-no-location .vi-context{border-radius:12px;background:var(--vm-tint);color:var(--vm-accent);padding:12px 13px;margin:0 0 10px;font-size:12px}
     #visitmate-no-location .vi-context strong{font-weight:500;display:block;margin-bottom:3px}
@@ -292,7 +293,7 @@
       <main class="vr-body"><div class="vr-signoff"><i data-lucide="clipboard-check" aria-hidden="true"></i><div><strong>本次拜访待确认结束</strong><small>效果图示例 · 未提交真实业务数据</small></div></div><div class="vm-box"><h2>拜访纪要</h2><p id="vr-finish-minutes">【演示】拟核实目标包型与材料应用位置，真实需求尚待客户确认。</p><div class="vi-kv"><small>Action</small><p id="vr-finish-action">【演示】客户经理安排技术交流，FAE 准备材料需求表。</p></div><div class="vi-kv"><small>Follow-up</small><p id="vr-finish-follow">【演示】确认项目责任人与下一次评审安排。</p></div></div><div class="vm-box"><h2>归档与跟进</h2><div class="vr-doc"><span>所属客户</span><span data-customer-name>宁德时代</span></div><div class="vr-doc"><span>业务方向</span><span>Cell / Battery Cover</span></div><div class="vr-doc"><span>客户需求状态</span><span class="vm-pill">待验证</span></div><div class="vr-doc"><span>负责人 / 截止日期</span><small>待人工确认</small></div></div><div class="vr-action-row"><button type="button" class="vi-secondary cursor-interaction" data-review-action="summary">返回编辑纪要</button><button type="button" class="vm-primary cursor-interaction" data-review-action="confirm-finish">确认结束（预览）</button></div><div class="vm-status" id="vr-finish-status" aria-live="polite"></div><p class="vr-review">此操作用于界面核对，尚未写入正式业务系统</p></main>
     </section>
     <section id="vm-clients" class="vc-list" aria-label="合作客户列表">
-      
+      <div class="vh-statusbar"><span>9:41</span><div><i data-lucide="signal" aria-hidden="true"></i><i data-lucide="wifi" aria-hidden="true"></i><i data-lucide="battery-full" aria-hidden="true"></i></div></div>
       <div class="vc-list-title"><h2>客户资料</h2><span class="vm-pill">合作客户 · 10</span></div>
       <div class="vc-description">我们的合作企业</div>
       <div class="vi-context"><strong>Huntsman 客户拜访</strong>灌封胶 Cell / Battery Cover 电池上盖<p>记录联系人、拜访 Report 和后续行动。</p></div>
@@ -312,8 +313,8 @@
       <p class="vh-foot">合作关系由你提供 · 业务分析更新于 2026.10.22</p>
     </section>
     <section class="vm-home" id="vm-home" aria-label="客户拜访首页" hidden>
-      
-      <header class="vh-titlebar"><h1>客户拜访</h1><button type="button" class="cursor-interaction" aria-label="更多" data-home-action="more"><i data-lucide="ellipsis" aria-hidden="true"></i></button></header>
+      <div class="vh-statusbar"><span>9:41</span><div><i data-lucide="signal" aria-hidden="true"></i><i data-lucide="wifi" aria-hidden="true"></i><i data-lucide="battery-full" aria-hidden="true"></i></div></div>
+      <header class="vh-titlebar"><button type="button" class="cursor-interaction" aria-label="打开客户列表" data-home-action="list"><i data-lucide="users" aria-hidden="true"></i></button><h1>客户拜访</h1><button type="button" class="cursor-interaction" aria-label="更多" data-home-action="more"><i data-lucide="ellipsis" aria-hidden="true"></i></button></header>
       <div class="vn-intro"><span>VISITMATE / HUNTSMAN</span><h2>客户资料与合作机会</h2><p>了解客户需求，推进每一次沟通。</p></div>
       <div class="vh-customer"><div class="vh-campus" role="img" aria-label="企业示意图"></div><div class="vh-customer-body"><span class="vn-eyebrow">当前合作客户</span><h2 data-customer-name>宁德时代</h2><span class="vn-caption">合作客户 · 联系人待补充</span></div><button type="button" class="vn-switch cursor-interaction" data-home-action="list">切换<i data-lucide="chevron-right" aria-hidden="true"></i></button></div>
       <div class="vh-grid">
@@ -347,6 +348,7 @@
           <button type="button" class="vm-opportunity cursor-interaction" data-op="cell" aria-pressed="true"><div class="vm-op-meta"><i data-lucide="layers" aria-hidden="true"></i><span>进展待补充</span></div><strong>灌封胶 Cell</strong><small>电芯灌封应用</small></button>
           <button type="button" class="vm-opportunity cursor-interaction" data-op="cover" aria-pressed="false"><div class="vm-op-meta"><i data-lucide="battery" aria-hidden="true"></i><span>进展待补充</span></div><strong>Battery Cover</strong><small>电池上盖</small></button>
         </div>
+        <div id="vi-opportunity-manager" class="vi-manager"></div>
         <div class="vm-section-heading"><h2>联系人</h2><span class="vm-caption">按客户与业务方向记录</span></div>
         <div class="vm-contact-form"><input id="contact-name" type="text" maxlength="80" placeholder="联系人姓名" aria-label="联系人姓名"><input id="contact-role" type="text" maxlength="150" placeholder="部门 / 职务" aria-label="部门或职务"><button type="button" class="vm-copy cursor-interaction" id="contact-add">添加联系人</button></div>
         <label class="vm-copy cursor-interaction vm-upload" for="contact-image"><i data-lucide="scan-text" aria-hidden="true"></i>拍照 / 选择名片，识别联系人</label><input id="contact-image" type="file" accept="image/jpeg,image/png,image/webp,image/bmp" hidden>
@@ -387,14 +389,7 @@
       <section id="vm-info" role="tabpanel" aria-labelledby="vm-info-tab" hidden>
         <div class="vm-section-heading"><h2>企业公开信息</h2><span class="vm-caption">客户资料</span></div>
         <div class="vm-box"><div class="vi-eyebrow">公开资料</div><h2 id="vi-company-type"></h2><p id="vi-company-fact"></p><a id="vi-company-source" class="vi-source-link cursor-interaction" target="_blank" rel="noopener noreferrer"></a></div>
-        <div id="vi-company-data" class="vi-company-data" hidden></div>
-        <details class="vi-disclosure"><summary class="cursor-interaction">工商登记资料 · 待核验</summary>
-        <div class="vm-box">
-          <div class="vm-capital"><div><small>注册资本</small><strong>待核验</strong></div><div><small>实缴资本</small><strong>待核验</strong></div></div>
-          <dl><dt>客户名称</dt><dd data-customer-name>宁德时代</dd><dt>合作关系</dt><dd><span class="vm-pill">已合作</span></dd><dt>工商主体全称</dt><dd>待确认具体合作主体</dd><dt>统一社会信用代码</dt><dd>待核验</dd><dt>法定代表人</dt><dd>待核验</dd><dt>成立日期</dt><dd>待核验</dd><dt>登记状态</dt><dd>待核验</dd><dt>企业类型</dt><dd>待核验</dd><dt>注册地址</dt><dd>待核验</dd><dt>经营范围</dt><dd>待核验</dd><dt>登记机关</dt><dd>待核验</dd><dt>营业期限</dt><dd>待核验</dd></dl>
-          <div class="vm-source">客户名单与合作关系：内部提供<br>工商信息来源及核验时间：待补充</div>
-        </div>
-        </details>
+        <div id="vi-intelligence" class="vi-company-data"></div>
         
       </section>
       <div class="vm-status" aria-live="polite" id="vm-status"></div>
@@ -403,6 +398,8 @@
     <footer class="vm-bottom"><span><i data-lucide="calendar-days" aria-hidden="true"></i>拜访</span><span class="vm-current"><i data-lucide="building-2" aria-hidden="true"></i>客户</span><span><i data-lucide="circle-user-round" aria-hidden="true"></i>我的</span></footer>
     </div>
   </div>
+  <script src="assets/customer-intelligence.js"></script>
+  <script src="assets/capacity-globe.js"></script>
   <script>
     (()=>{
       const root=document.getElementById('visitmate-no-location');
@@ -430,24 +427,9 @@
         const profile=profiles[client];
         root.querySelector('#vi-company-type').textContent=profile.type;root.querySelector('#vi-company-fact').textContent=profile.fact;
         const source=root.querySelector('#vi-company-source');source.href=profile.source;source.textContent=profile.sourceLabel+' ↗';
-        const data=root.querySelector('#vi-company-data');
-        const sources=(links)=>'<div class="vi-data-links">'+links.map(([url,label])=>'<a class="vi-source-link cursor-interaction" target="_blank" rel="noopener noreferrer" href="'+url+'">'+label+' ↗</a>').join('')+'</div>';
-        const table=(headers,rows)=>'<div class="vi-data-table-wrap"><table class="vi-data-table"><thead><tr>'+headers.map(x=>'<th>'+x+'</th>').join('')+'</tr></thead><tbody>'+rows.map(row=>'<tr>'+row.map((x,i)=>'<td data-label="'+headers[i]+'">'+x+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';
-        const catl=client==='catl';
-        if(client!=='catl'&&client!=='byd'){data.hidden=true;data.replaceChildren();return;}
-        data.hidden=false;
-        const body=catl
-          ? '<div class="vi-data-heading"><h2>经营与市场数据</h2><small>公开口径 · 更新至 2026-10-22</small></div>'
-            +'<div class="vi-data-card"><h3>动力电池装机量与排名</h3>'+table(['统计期','宁德时代装机','变化 / 排名'],[['2024年10月','25.32 GWh','当月值；中国全行业装机同比 +51%'],['2025年10月','36.14 GWh','同比 +42.7%；中国单月排名第 1'],['2026年8月','32.54 GWh','中国份额 41.45%'],['2026年9月','35.49 GWh','环比 +9.1%；份额 40.92%（环比 -0.53 个百分点）'],['2026年10月','尚未发布','截至 10 月 22 日，月度完整数据未出']])+'<p>2025 年全球动力电池使用量份额 39.2%，连续第 9 年全球第一；中国动力电池装机份额 43.42%，排名第一。2026 年 9 月同比尚未在当前资料中核实；月度环比由相邻月份装机量计算。</p>'+sources([['https://www.catl.com/en/news/6773.html','宁德时代 2025 年报摘要'],['https://www.catl.com/en/uploads/1/file/public/202603/20260310105310_46xjbwckvn.pdf','2025 年报财务及行业数据'],['https://www.ithome.com/0/896/862.htm','中国汽车动力电池产业创新联盟 2025 年 10 月数据转载'],['https://www.ithome.com/0/812/562.htm','宁德时代 2024 年 10 月数据'],['https://disc.static.szse.cn/disc/disk03/finalpage/2026-07-25/8e6750da-b178-4be9-a74a-4b1d8fc42c58.PDF','2026 年中期报告']])+'</div>'
-            +'<div class="vi-data-card"><h3>产能与生产布局</h3><p><strong>公开产能口径：</strong>年报披露 2025 年锂离子电池销量 661 GWh（其中动力电池 541 GWh），这是销量，不等同于设计产能；不同基地名义产能与爬坡产能没有可直接相加的统一公开口径。</p><p><strong>中国布局：</strong>福建宁德为总部及核心生产基地，并在江苏、四川、广东、青海等地布局电池生产和研发项目。<br><strong>海外布局：</strong>德国图林根已有生产基地，匈牙利项目建设中；并通过授权、合作及海外服务网络扩展本地交付。</p>'+sources([['https://www.hkexnews.hk/listedco/listconews/sehk/2026/0311/2026031100770.pdf','宁德时代 2025 年报：业务、项目与基地']])+'</div>'
-            +'<div class="vi-data-card"><h3>财务数据（人民币）</h3>'+table(['期间','营业收入','归母净利润'],[['2024 年','3,620.1 亿元','507.4 亿元'],['2025 年','4,237.0 亿元（+17.0%）','722.0 亿元（+42.3%）'],['2026 年上半年','2,769.2 亿元（+54.8%）','432.8 亿元（+42.0%）']])+'<p>2026 年最新已披露财务期为上半年；三季度及全年财报尚未发布。</p>'+sources([['https://www.catl.com/en/news/6773.html','2025 年度业绩'],['https://disc.static.szse.cn/disc/disk03/finalpage/2026-07-25/8e6750da-b178-4be9-a74a-4b1d8fc42c58.PDF','2026 年中期报告']])+'</div>'
-          : '<div class="vi-data-heading"><h2>经营与市场数据</h2><small>公开口径 · 更新至 2026-10-22</small></div>'
-            +'<div class="vi-data-card"><h3>车辆产销、出口与排名</h3>'+table(['统计期','产量','销量 / 出口','同比 / 环比'],[['2024年10月','53.61 万辆','销量 50.27 万辆','销量同比 +66.5%'],['2025年10月','42.98 万辆','销量 44.17 万辆；出口 8.39 万辆','销量同比 -12.1%；环比 +11.5%'],['2026年9月','46.39 万辆','销量 46.36 万辆；出口 18.07 万辆','销量同比 +17.0%；10 月完整数据未发布'],['2026年10月','尚未发布','截至 10 月 22 日，月度完整数据未出','统计期未结束']])+'<p>2025 年 BYD 全球新能源车销量 460.2 万辆，全球排名第一，并获中国车企销量第一；纯电车型销量约 226 万辆。2026 年上半年公司披露蝉联全球新能源车销量冠军。榜单口径按新能源车（含插混）和纯电区分。2026 年 9 月值及同比来自月度产销公告汇总，月环比未核实。</p>'+sources([['https://www.hkexnews.hk/listedco/listconews/sehk/2026/0327/2026032702970_c.pdf','比亚迪 2025 年报'],['https://prod.byd.com/cn/news/2025/detail607','比亚迪官方月度销量公告（2025年9月）'],['https://prod.byd.com/cn/detail614','比亚迪官方 2025 年销量及排名'],['https://www.byd.com/cn/news','比亚迪官方新闻与公告'],['https://static.cninfo.com.cn/finalpage/2026-08-29/1225531835.PDF','比亚迪 2026 年半年度报告']])+'</div>'
-            +'<div class="vi-data-card"><h3>产能与生产布局</h3><p><strong>公开产能口径：</strong>比亚迪没有在公开年报中给出全球乘用车统一名义产能总数；车型、基地和爬坡阶段差异较大，建议拜访时按车型/工厂核实年产规划与利用率。</p><p><strong>中国布局：</strong>深圳总部及西安、长沙、常州、合肥、郑州、济南等整车与零部件生产基地。<br><strong>海外布局：</strong>泰国、巴西、乌兹别克斯坦等已建或投产基地，匈牙利、土耳其等项目推进中。具体产能以项目公告和投产进度为准。</p>'+sources([['https://www.hkexnews.hk/listedco/listconews/sehk/2026/0327/2026032702644.pdf','比亚迪 2025 年报'],['https://www.byd.com/en/news/2026/2026-03-27-byd-annual-results','全球布局及年度业绩']])+'</div>'
-            +'<div class="vi-data-card"><h3>财务数据（人民币）</h3>'+table(['期间','营业收入','归母净利润'],[['2024 年','7,771.0 亿元','402.5 亿元'],['2025 年','8,039.7 亿元（+3.5%）','326.2 亿元（-19.0%）'],['2026 年上半年','3,448.2 亿元（-7.13%）','123.3 亿元（-20.54%）']])+'<p>2026 年最新已披露财务期为上半年；三季度及全年财报尚未发布。</p>'+sources([['https://www.hkexnews.hk/listedco/listconews/sehk/2026/0327/2026032702970_c.pdf','2025 年报'],['https://static.cninfo.com.cn/finalpage/2026-08-29/1225531835.PDF','2026 年半年度报告']])+'</div>';
-        data.innerHTML=body;
+        window.VisitMateIntelligence?.renderCompany(client);
       }
-      function renderContacts(){
+            function renderContacts(){
         const list=root.querySelector('#contact-list');list.replaceChildren();const entries=contacts[key()]||[];
         root.querySelector('#vm-contact-label').textContent=entries.length?entries.length+' 位业务联系人':'联系人待录入';
         entries.forEach((contact,index)=>{const row=document.createElement('div');row.className='vm-contact-row';const info=document.createElement('span');info.textContent=contact.name+(contact.role?' · '+contact.role:'');
@@ -473,7 +455,7 @@
         if(record){for(const [slot,value] of Object.entries({'record-date':record.date,title:opportunities[current]+' · 拜访纪要',minutes:record.minutes,action:record.action||'待补充',follow:record.follow||'待补充'})){root.querySelector('[data-slot="'+slot+'"]').textContent=value;}}
         const history=root.querySelector('#vc-history');history.replaceChildren();
         if(visits.length>1){visits.forEach((visit,index)=>{const button=document.createElement('button');button.type='button';button.className='vm-copy cursor-interaction';button.textContent=(index===activeRecord?'正在查看 · ':'查看记录 · ')+visit.date;button.addEventListener('click',()=>{activeRecord=index;render();});history.appendChild(button);});}
-        renderCompanyInfo();renderContacts();
+        renderCompanyInfo();renderContacts();window.VisitMateIntelligence?.renderOpportunities(client,current);
       }
       root.querySelectorAll('[data-client]').forEach(b=>b.addEventListener('click',()=>{captureDraft();client=b.dataset.client;current='cell';page='info';screen='detail';returnScreen='clients';activeRecord=0;status.textContent='';restoreDraft();render();persist();}));
 
