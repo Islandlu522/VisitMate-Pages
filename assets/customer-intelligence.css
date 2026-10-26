@@ -68,4 +68,12 @@
 #visitmate-no-location .vi-dialog .vi-dialog-actions button{background:#fff;color:#40566d;min-height:46px;font-size:15px}
 #visitmate-no-location .vi-dialog .vi-dialog-actions button[type=submit]{background:#087f79;color:#fff;border-color:#087f79}
 #visitmate-no-location .vi-dialog .vi-globe-coordinates small{color:#52677b}
-#visitmate-no-location .vi-dialog .vi-dialog-actions{position:sticky;bottom:0;padding:10px 0 0;background:#fff;z-index:2}
+#visitmate-no-location .vi-dialog .vi-dialog-actions{position:sticky;bottom:0;padding:10px 0 0;background:#fff;z-index:2}#visitmate-no-location .vm-custom-opportunities{display:contents}
+#visitmate-no-location .vm-opportunity-add{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;border-style:dashed;border-color:#9cb9bb;background:linear-gradient(135deg,#f8fcfb,#f2f8f7);color:#087f79;cursor:pointer;transition:background .18s,border-color .18s,transform .18s}
+#visitmate-no-location .vm-opportunity-add:hover{background:#eaf6f4;border-color:#087f79;transform:translateY(-1px)}
+#visitmate-no-location .vm-opportunity-add .vm-add-mark{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#dff2ef;color:#087f79;font-size:22px;line-height:1}
+#visitmate-no-location .vm-opportunity-add strong{margin:8px 0 3px;color:#087f79}
+#visitmate-no-location .vm-opportunity-add small{color:#637d88}
+#visitmate-no-location .vm-custom-opportunity .vm-op-meta{font-size:10px;color:#087f79}
+#visitmate-no-location #vm-module-error{color:#b42318;font-size:12px;line-height:1.5}
+
