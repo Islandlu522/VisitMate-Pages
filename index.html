@@ -244,7 +244,11 @@
   </style>
   <style>
     #visitmate-no-location .vn-intro{padding:26px 0 20px}
-    #visitmate-no-location .vn-intro-brandrow{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:11px}
+    #visitmate-no-location .vn-intro-brandrow{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+    #visitmate-no-location .vn-intro-brandrow>.vn-brand-lockup{display:flex;align-items:baseline;gap:7px;font-size:17px;letter-spacing:.2px;color:var(--vm-navy);font-weight:800;white-space:nowrap}
+    #visitmate-no-location .vn-brand-lockup i{font-size:14px;font-style:normal;color:var(--vm-accent);font-weight:500}
+    #visitmate-no-location .vn-brand-lockup b:first-child{color:var(--vm-ink)}
+    #visitmate-no-location .vn-brand-lockup b:last-child{color:var(--vm-accent)}
     #visitmate-no-location .vn-intro-brandrow>span{display:block;font-size:10px;letter-spacing:1.6px;color:var(--vm-accent);white-space:nowrap}
     #visitmate-no-location .vn-signature{display:inline-flex;align-items:center;gap:5px;min-height:26px;padding:0 10px;border:1px solid #d3e7e2;border-radius:999px;background:linear-gradient(135deg,#f2f8f6,#e5f1ee);color:#315d57;font-size:9px;letter-spacing:.8px;font-weight:700;white-space:nowrap;box-shadow:0 2px 7px rgba(12,74,67,.08)}
     #visitmate-no-location .vn-signature:before{content:"";width:6px;height:6px;border-radius:50%;background:#c89e52;box-shadow:0 0 0 3px rgba(200,158,82,.15)}
@@ -316,7 +320,7 @@
     </section>
     <section class="vm-home" id="vm-home" aria-label="客户拜访首页" hidden>
       <header class="vh-titlebar"><button type="button" class="cursor-interaction" aria-label="打开客户列表" data-home-action="list"><i data-lucide="users" aria-hidden="true"></i></button><h1>客户拜访</h1><button type="button" class="cursor-interaction" aria-label="更多" data-home-action="more"><i data-lucide="ellipsis" aria-hidden="true"></i></button></header>
-      <div class="vn-intro"><div class="vn-intro-brandrow"><span>VISITMATE / HUNTSMAN</span><strong class="vn-signature">DESIGNED BY <b>Sakya Linchong Island_Lu</b></strong></div><h2>客户资料与合作机会</h2><p>了解客户需求，推进每一次沟通。</p></div>
+      <div class="vn-intro"><div class="vn-intro-brandrow"><span class="vn-brand-lockup"><b>VisitMate</b><i aria-hidden="true">/</i><b>Huntsman</b></span><strong class="vn-signature">DESIGNED BY <b>Sakya Linchong Island_Lu</b></strong></div><h2>客户资料与合作机会</h2><p>了解客户需求，推进每一次沟通。</p></div>
       <div class="vh-customer"><div class="vh-campus" role="img" aria-label="企业示意图"></div><div class="vh-customer-body"><span class="vn-eyebrow">当前合作客户</span><h2 data-customer-name>宁德时代</h2><span class="vn-caption">合作客户 · 联系人待补充</span></div><button type="button" class="vn-switch cursor-interaction" data-home-action="list">切换<i data-lucide="chevron-right" aria-hidden="true"></i></button></div>
       <div class="vh-grid">
         <button type="button" class="vh-tile cursor-interaction" data-enter="info"><span class="vh-icon"><i data-lucide="file-user" aria-hidden="true"></i></span><i data-lucide="chevron-right" class="vh-chevron" aria-hidden="true"></i><strong>客户资料</strong><small>企业信息与需求分析</small></button>
