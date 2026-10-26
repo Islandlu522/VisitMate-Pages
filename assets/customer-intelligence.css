@@ -1,0 +1,58 @@
+#visitmate-no-location .vi-intel{margin-top:14px}
+#visitmate-no-location .vi-intel-intro{margin:0 0 12px;color:var(--vm-soft);font-size:11px}
+#visitmate-no-location .vi-intel-tabs,#visitmate-no-location .vi-year-tabs,#visitmate-no-location .vi-scope-tabs{display:flex;gap:7px;overflow:auto;padding:1px 0 7px;scrollbar-width:thin}
+#visitmate-no-location .vi-intel-tabs button,#visitmate-no-location .vi-year-tabs button,#visitmate-no-location .vi-scope-tabs button{white-space:nowrap;border:1px solid var(--vm-line);background:var(--vm-bg);color:var(--vm-soft);border-radius:9px;padding:7px 10px;font-size:11px;min-height:36px}
+#visitmate-no-location .vi-intel-tabs button[aria-pressed=true],#visitmate-no-location .vi-year-tabs button[aria-pressed=true],#visitmate-no-location .vi-scope-tabs button[aria-pressed=true]{background:var(--vm-tint);border-color:var(--vm-accent);color:var(--vm-accent)}
+#visitmate-no-location .vi-intel-top{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin:10px 0 7px}
+#visitmate-no-location .vi-intel-top h2{font-size:15px}
+#visitmate-no-location .vi-intel-top p{font-size:10px;color:var(--vm-soft);margin:2px 0}
+#visitmate-no-location .vi-intel-add,#visitmate-no-location .vi-item-actions button{border:1px solid var(--vm-line);border-radius:8px;padding:6px 9px;min-height:34px;color:var(--vm-accent);background:var(--vm-panel);font-size:11px;white-space:nowrap}
+#visitmate-no-location .vi-intel-card{background:var(--vm-panel);border:1px solid var(--vm-line);border-radius:13px;padding:12px;margin:9px 0}
+#visitmate-no-location .vi-intel-card h3{margin:0 0 8px;font-size:13px}
+#visitmate-no-location .vi-intel-data{border-top:1px solid var(--vm-line);padding:9px 0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px}
+#visitmate-no-location .vi-intel-data:first-child{border-top:0}
+#visitmate-no-location .vi-intel-data strong{display:block;font-size:12px;font-weight:500}
+#visitmate-no-location .vi-intel-data small{display:block;color:var(--vm-soft);font-size:10px;line-height:1.55}
+#visitmate-no-location .vi-intel-data .vi-item-actions{display:flex;align-items:center;gap:4px}
+#visitmate-no-location .vi-intel-data .vi-item-actions button{padding:5px 7px;min-height:30px}
+#visitmate-no-location .vi-intel-empty{font-size:11px;color:var(--vm-soft);padding:9px 0}
+#visitmate-no-location .vi-intel-note{font-size:10px;color:var(--vm-soft);line-height:1.55;margin:8px 0 0}
+#visitmate-no-location .vi-dialog{width:min(92vw,410px);max-height:88dvh;overflow:auto;border:1px solid var(--vm-line);border-radius:18px;padding:18px;background:var(--vm-panel);color:var(--vm-ink);box-shadow:0 20px 80px #0005}
+#visitmate-no-location .vi-dialog::backdrop{background:#08152380;backdrop-filter:blur(2px)}
+#visitmate-no-location .vi-dialog h2{font-size:17px;margin:0 0 12px}
+#visitmate-no-location .vi-form{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#visitmate-no-location .vi-form label{display:block;font-size:11px;color:var(--vm-soft);margin:3px 0}
+#visitmate-no-location .vi-form input,#visitmate-no-location .vi-form select,#visitmate-no-location .vi-form textarea{display:block;width:100%;min-height:38px;border:1px solid var(--vm-line);border-radius:8px;padding:8px;background:var(--vm-bg);color:var(--vm-ink);font:inherit;font-size:12px}
+#visitmate-no-location .vi-form textarea{min-height:72px;resize:vertical}
+#visitmate-no-location .vi-form .vi-wide{grid-column:1/-1}
+#visitmate-no-location .vi-dialog-actions{display:flex;gap:8px;margin-top:14px}
+#visitmate-no-location .vi-dialog-actions button{flex:1;border:1px solid var(--vm-line);border-radius:9px;min-height:40px}
+#visitmate-no-location .vi-dialog-actions button[type=submit]{background:var(--vm-accent);color:white}
+#visitmate-no-location .vi-op-list{display:grid;gap:8px;margin-bottom:12px}
+#visitmate-no-location .vi-op-card{border:1px solid var(--vm-line);border-radius:12px;padding:11px;background:var(--vm-panel)}
+#visitmate-no-location .vi-op-card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+#visitmate-no-location .vi-op-card h3{font-size:13px;margin:0}
+#visitmate-no-location .vi-op-card p{font-size:11px;line-height:1.5;margin:7px 0}
+#visitmate-no-location .vi-op-card small{font-size:10px;color:var(--vm-soft)}
+#visitmate-no-location .vi-manager{margin:4px 0 17px}
+@media(max-width:370px){#visitmate-no-location .vi-intel-tabs,#visitmate-no-location .vi-year-tabs,#visitmate-no-location .vi-scope-tabs{gap:5px}#visitmate-no-location .vi-intel-tabs button,#visitmate-no-location .vi-year-tabs button,#visitmate-no-location .vi-scope-tabs button{padding:6px 8px}}
+
+#visitmate-no-location .vi-globe-panel{background:linear-gradient(155deg,#112e36,#123d3d);border:1px solid rgba(89,168,150,.38);border-radius:16px;padding:13px;margin:12px 0;overflow:hidden;color:#f4fbf7}
+#visitmate-no-location .vi-globe-head{display:flex;justify-content:space-between;align-items:center;gap:8px}
+#visitmate-no-location .vi-globe-head strong,#visitmate-no-location .vi-globe-head small{display:block}
+#visitmate-no-location .vi-globe-head strong{font-size:13px}
+#visitmate-no-location .vi-globe-head small{font-size:10px;color:#bbd7d0;margin-top:3px}
+#visitmate-no-location .vi-globe-head button{border:1px solid #4a8078;border-radius:8px;background:#1b4a48;color:#eafff8;padding:6px 8px;font-size:10px;white-space:nowrap}
+#visitmate-no-location .vi-globe{display:block;width:100%;height:245px;touch-action:pan-y;cursor:grab;margin:3px auto}
+#visitmate-no-location .vi-globe:active{cursor:grabbing}
+#visitmate-no-location .vi-globe-legend{display:flex;flex-wrap:wrap;gap:12px;font-size:10px;color:#d5e8df}
+#visitmate-no-location .vi-globe-legend span{display:flex;align-items:center;gap:5px}
+#visitmate-no-location .vi-globe-dot{width:8px;height:8px;border-radius:50%;display:inline-block;background:#6be5d2;box-shadow:0 0 9px #6be5d2}
+#visitmate-no-location .vi-globe-dot.plant{background:#ffd36d;box-shadow:0 0 9px #ffd36d}
+#visitmate-no-location .vi-globe-sites{display:grid;gap:6px;margin-top:10px}
+#visitmate-no-location .vi-globe-sites>div{border-top:1px solid #ffffff20;padding-top:6px}
+#visitmate-no-location .vi-globe-sites b,#visitmate-no-location .vi-globe-sites small{display:block;font-size:10px}
+#visitmate-no-location .vi-globe-sites small{color:#c0d7d0;margin-top:2px}
+#visitmate-no-location .vi-globe-panel .vi-intel-note{color:#c0d7d0}
+#visitmate-no-location .vi-globe-coordinates>div{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#visitmate-no-location .vi-globe-coordinates small{display:block;color:var(--vm-soft);font-size:10px;margin-top:4px}
