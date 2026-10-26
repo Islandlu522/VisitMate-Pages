@@ -156,7 +156,7 @@
     #visitmate-no-location .vm-task p{font-size:13px}
     @media(max-width:370px){#visitmate-no-location .vc-list{padding:0 15px 16px}}
   </style>
-  <link rel="stylesheet" href="assets/customer-intelligence.css?v=20261026-contact-ocr-v2">
+  <link rel="stylesheet" href="assets/customer-intelligence.css?v=20261026-island-design">
   <style>
     #visitmate-no-location .vi-context{border-radius:12px;background:var(--vm-tint);color:var(--vm-accent);padding:12px 13px;margin:0 0 10px;font-size:12px}
     #visitmate-no-location .vi-context strong{font-weight:500;display:block;margin-bottom:3px}
@@ -244,7 +244,12 @@
   </style>
   <style>
     #visitmate-no-location .vn-intro{padding:26px 0 20px}
-    #visitmate-no-location .vn-intro>span{display:block;font-size:11px;letter-spacing:1.6px;color:var(--vm-accent);margin-bottom:9px}
+    #visitmate-no-location .vn-intro-brandrow{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:11px}
+    #visitmate-no-location .vn-intro-brandrow>span{display:block;font-size:10px;letter-spacing:1.6px;color:var(--vm-accent);white-space:nowrap}
+    #visitmate-no-location .vn-signature{display:inline-flex;align-items:center;gap:5px;min-height:26px;padding:0 10px;border:1px solid #d3e7e2;border-radius:999px;background:linear-gradient(135deg,#f2f8f6,#e5f1ee);color:#315d57;font-size:9px;letter-spacing:.8px;font-weight:700;white-space:nowrap;box-shadow:0 2px 7px rgba(12,74,67,.08)}
+    #visitmate-no-location .vn-signature:before{content:"";width:6px;height:6px;border-radius:50%;background:#c89e52;box-shadow:0 0 0 3px rgba(200,158,82,.15)}
+    #visitmate-no-location .vn-signature b{color:#087f79;font-weight:800}
+    @media(max-width:370px){#visitmate-no-location .vn-intro-brandrow{align-items:flex-start;flex-direction:column;gap:8px}#visitmate-no-location .vn-signature{align-self:flex-end}}
     #visitmate-no-location .vn-intro h2{font-size:22px;letter-spacing:-.5px;margin:0 0 6px}
     #visitmate-no-location .vn-intro p{font-size:12px;color:var(--vm-soft);margin:0}
     #visitmate-no-location .vh-customer{padding:14px;background:var(--vm-bg);border-radius:15px;margin-bottom:21px;gap:12px}
@@ -311,7 +316,7 @@
     </section>
     <section class="vm-home" id="vm-home" aria-label="客户拜访首页" hidden>
       <header class="vh-titlebar"><button type="button" class="cursor-interaction" aria-label="打开客户列表" data-home-action="list"><i data-lucide="users" aria-hidden="true"></i></button><h1>客户拜访</h1><button type="button" class="cursor-interaction" aria-label="更多" data-home-action="more"><i data-lucide="ellipsis" aria-hidden="true"></i></button></header>
-      <div class="vn-intro"><span>VISITMATE / HUNTSMAN</span><h2>客户资料与合作机会</h2><p>了解客户需求，推进每一次沟通。</p></div>
+      <div class="vn-intro"><div class="vn-intro-brandrow"><span>VISITMATE / HUNTSMAN</span><strong class="vn-signature">DESIGNED BY <b>Island_Lu</b></strong></div><h2>客户资料与合作机会</h2><p>了解客户需求，推进每一次沟通。</p></div>
       <div class="vh-customer"><div class="vh-campus" role="img" aria-label="企业示意图"></div><div class="vh-customer-body"><span class="vn-eyebrow">当前合作客户</span><h2 data-customer-name>宁德时代</h2><span class="vn-caption">合作客户 · 联系人待补充</span></div><button type="button" class="vn-switch cursor-interaction" data-home-action="list">切换<i data-lucide="chevron-right" aria-hidden="true"></i></button></div>
       <div class="vh-grid">
         <button type="button" class="vh-tile cursor-interaction" data-enter="info"><span class="vh-icon"><i data-lucide="file-user" aria-hidden="true"></i></span><i data-lucide="chevron-right" class="vh-chevron" aria-hidden="true"></i><strong>客户资料</strong><small>企业信息与需求分析</small></button>
@@ -403,8 +408,8 @@
     <footer class="vm-bottom"><span><i data-lucide="calendar-days" aria-hidden="true"></i>拜访</span><span class="vm-current"><i data-lucide="building-2" aria-hidden="true"></i>客户</span><span><i data-lucide="circle-user-round" aria-hidden="true"></i>我的</span></footer>
     </div>
   </div>
-  <script src="assets/customer-intelligence.js?v=20261026-contact-ocr-v2"></script>
-  <script src="assets/capacity-globe.js?v=20261026-contact-ocr-v2"></script>
+  <script src="assets/customer-intelligence.js?v=20261026-island-design"></script>
+  <script src="assets/capacity-globe.js?v=20261026-island-design"></script>
   <script>
     (()=>{
       const root=document.getElementById('visitmate-no-location');
